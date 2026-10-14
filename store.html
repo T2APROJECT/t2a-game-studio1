@@ -1,1 +1,714 @@
 
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T2A GAME STUDİO | Oyun Mağazası</title>
+  <meta name="description" content="T2A GAME STUDİO oyun mağazası. Popüler PC oyunlarını keşfet.">
+  <style>
+    :root {
+      --bg: #101216;
+      --panel: #191d24;
+      --panel2: #222833;
+      --text: #f1f5f9;
+      --muted: #9aa6b7;
+      --green: #72e6a2;
+      --green-dark: #183d2b;
+      --border: #2c3440;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button, input, select { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 5%;
+      background: #171a20;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: .4px;
+      white-space: nowrap;
+    }
+
+    .logo span { color: var(--green); }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: #c6ced9;
+      font-size: 14px;
+    }
+
+    .nav a:hover { color: var(--green); }
+
+    .user-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .logout {
+      border: 1px solid #46515f;
+      color: white;
+      background: #252b35;
+      padding: 9px 13px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .logout:hover { background: #343d49; }
+
+    .hero {
+      margin: 28px auto;
+      width: 90%;
+      max-width: 1400px;
+      min-height: 300px;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: clamp(24px, 5vw, 64px);
+      background:
+        linear-gradient(90deg, rgba(10,13,18,.98), rgba(10,13,18,.78) 48%, rgba(10,13,18,.12)),
+        url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1800&q=85")
+        center/cover;
+      border: 1px solid #303844;
+    }
+
+    .hero-content { max-width: 570px; }
+
+    .eyebrow {
+      color: var(--green);
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.05;
+      margin: 14px 0;
+    }
+
+    .hero p {
+      color: #c2cbd7;
+      line-height: 1.7;
+      max-width: 500px;
+    }
+
+    .primary-btn {
+      display: inline-block;
+      border: 0;
+      border-radius: 7px;
+      background: var(--green);
+      color: #102017;
+      font-weight: bold;
+      padding: 12px 18px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .primary-btn:hover { background: #95f4b9; }
+
+    main {
+      width: 90%;
+      max-width: 1400px;
+      margin: 0 auto 60px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 36px 0 18px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    .section-heading p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .search {
+      flex: 1;
+      min-width: 220px;
+      background: #1b2028;
+      color: white;
+      border: 1px solid #343d49;
+      padding: 13px 15px;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .search:focus { border-color: var(--green); }
+
+    .filter {
+      min-width: 155px;
+      background: #1b2028;
+      color: white;
+      border: 1px solid #343d49;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .chips {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin: 0 0 22px;
+    }
+
+    .chip {
+      background: #202630;
+      border: 1px solid #343d49;
+      color: #d5dce6;
+      padding: 9px 14px;
+      border-radius: 22px;
+      cursor: pointer;
+    }
+
+    .chip:hover, .chip.active {
+      background: var(--green-dark);
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .game-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      min-width: 0;
+      transition: transform .18s, border-color .18s;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+      border-color: #52645b;
+    }
+
+    .cover {
+      height: 185px;
+      position: relative;
+      background: #252b35;
+      overflow: hidden;
+    }
+
+    .cover img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform .25s;
+    }
+
+    .game-card:hover .cover img { transform: scale(1.04); }
+
+    .tag {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      background: rgba(10, 15, 12, .88);
+      color: var(--green);
+      font-size: 11px;
+      font-weight: bold;
+      padding: 6px 9px;
+      border-radius: 5px;
+    }
+
+    .game-info { padding: 15px; }
+
+    .game-info h3 {
+      font-size: 17px;
+      margin: 0 0 9px;
+    }
+
+    .game-info p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      min-height: 39px;
+      margin: 0 0 14px;
+    }
+
+    .card-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .price { font-weight: bold; font-size: 14px; }
+    .price.free { color: var(--green); }
+
+    .game-link {
+      background: #303946;
+      color: white;
+      border-radius: 6px;
+      padding: 9px 11px;
+      font-size: 12px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .game-link:hover {
+      background: var(--green);
+      color: #102017;
+    }
+
+    .empty {
+      display: none;
+      text-align: center;
+      padding: 45px 15px;
+      color: var(--muted);
+      background: var(--panel);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .notice {
+      background: #18271f;
+      color: #b7f2ce;
+      border: 1px solid #2a5039;
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 24px 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 26px 5%;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 1050px) {
+      .game-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .nav { display: none; }
+    }
+
+    @media (max-width: 720px) {
+      .topbar { padding: 13px 4%; }
+      .logo { font-size: 17px; }
+      .user-area { gap: 7px; }
+      #userEmail { max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
+      .hero, main { width: 92%; }
+      .hero { min-height: 280px; }
+      .game-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      .cover { height: 140px; }
+      .game-info { padding: 11px; }
+      .game-info h3 { font-size: 15px; }
+      .game-info p { font-size: 12px; }
+      .card-bottom { align-items: flex-start; flex-direction: column; }
+      .game-link { width: 100%; text-align: center; }
+      .section-heading h2 { font-size: 21px; }
+    }
+
+    @media (max-width: 380px) {
+      .game-grid { grid-template-columns: 1fr; }
+      .cover { height: 190px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="loading" class="loading">T2A GAME STUDİO yükleniyor...</div>
+
+  <div id="store" hidden>
+    <header class="topbar">
+      <a class="logo" href="store.html">T2A <span>GAME STUDİO</span></a>
+
+      <nav class="nav">
+        <a href="#games">Mağaza</a>
+        <a href="#free">Ücretsiz Oyunlar</a>
+        <a href="#paid">Ücretli Oyunlar</a>
+      </nav>
+
+      <div class="user-area">
+        <span id="userEmail"></span>
+        <button id="logoutBtn" class="logout">Çıkış yap</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow">Oyuncuların buluşma noktası</div>
+        <h1>Yeni dünyalar<br>keşfet.</h1>
+        <p>
+          Favori PC oyunlarını keşfet, ücretsiz oyunları bul ve
+          oyunların resmî sayfalarına kolayca ulaş.
+        </p>
+        <a href="#games" class="primary-btn">Oyunları keşfet</a>
+      </div>
+    </section>
+
+    <main id="games">
+      <div class="section-heading">
+        <div>
+          <h2>Oyun mağazası</h2>
+          <p>Popüler oyunlar, ücretsiz seçenekler ve mağaza bağlantıları.</p>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <input
+          id="searchInput"
+          class="search"
+          type="search"
+          placeholder="Oyun ara... (ör. Valorant, CS2)"
+          aria-label="Oyun ara"
+        >
+        <select id="priceFilter" class="filter" aria-label="Fiyat filtresi">
+          <option value="all">Tüm fiyatlar</option>
+          <option value="free">Ücretsiz oyunlar</option>
+          <option value="paid">Ücretli oyunlar</option>
+        </select>
+        <select id="sortFilter" class="filter" aria-label="Sıralama">
+          <option value="featured">Önerilen sıralama</option>
+          <option value="az">İsim: A-Z</option>
+          <option value="za">İsim: Z-A</option>
+        </select>
+      </div>
+
+      <div class="chips" aria-label="Oyun kategorileri">
+        <button class="chip active" data-category="all">Tümü</button>
+        <button class="chip" data-category="shooter">FPS / Aksiyon</button>
+        <button class="chip" data-category="battle">Battle Royale</button>
+        <button class="chip" data-category="casual">Eğlence</button>
+        <button class="chip" data-category="rpg">RPG / Macera</button>
+      </div>
+
+      <div id="gameGrid" class="game-grid"></div>
+      <div id="emptyMessage" class="empty">Aramana uygun oyun bulunamadı.</div>
+
+      <div class="notice">
+        <strong>Bilgilendirme:</strong> T2A GAME STUDİO bağımsız bir oyun
+        keşif sayfasıdır. Oyunlar ilgili yayıncıların veya mağazaların
+        resmî sayfalarından açılır. Ücret ve erişilebilirlik bilgileri
+        zamanla değişebilir; satın almadan önce resmî sayfayı kontrol et.
+      </div>
+    </main>
+
+    <footer>
+      © 2026 T2A GAME STUDİO — Oyuncular için hazırlandı.
+      Tüm oyun adları ve markalar ilgili sahiplerine aittir.
+    </footer>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from
+      "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut,
+      reload
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+    // Firebase Console > Project settings > Your apps bölümündeki
+    // web uygulaması yapılandırmasıyla aynı olmalı.
+    const firebaseConfig = {
+      apiKey: "AIzaSyAl1iMlEFRSFAoFP_nWL1lGjeVuoqY8F8g",
+      authDomain: "t2a-game-studio.firebaseapp.com",
+      projectId: "t2a-game-studio",
+      storageBucket: "t2a-game-studio.firebasestorage.app",
+      messagingSenderId: "284781981543",
+      appId: "1:284781981543:web:994dc99cef0142a97489c2"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const loading = document.getElementById("loading");
+    const store = document.getElementById("store");
+    const userEmail = document.getElementById("userEmail");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    // Fiyatlar yerine resmî mağaza bağlantıları kullanılıyor.
+    // Böylece değişebilen fiyatları yanlış göstermiyoruz.
+    const games = [
+      {
+        name: "VALORANT",
+        category: "shooter",
+        type: "free",
+        label: "ÜCRETSİZ",
+        description: "5'e 5 taktiksel karakter tabanlı nişancı oyunu.",
+        image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+        url: "https://playvalorant.com/"
+      },
+      {
+        name: "Counter-Strike 2",
+        category: "shooter",
+        type: "free",
+        label: "ÜCRETSİZ",
+        description: "Rekabetçi takım tabanlı FPS deneyimi.",
+        image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80",
+        url: "https://store.steampowered.com/app/730/CounterStrike_2/"
+      },
+      {
+        name: "Fortnite",
+        category: "battle",
+        type: "free",
+        label: "ÜCRETSİZ",
+        description: "Battle Royale, inşa ve farklı oyun modları.",
+        image: "https://images.unsplash.com/photo-1603481546238-487240415921?auto=format&fit=crop&w=800&q=80",
+        url: "https://www.fortnite.com/"
+      },
+      {
+        name: "Roblox",
+        category: "casual",
+        type: "free",
+        label: "ÜCRETSİZ",
+        description: "Oyuncuların oluşturduğu milyonlarca deneyim.",
+        image: "https://images.unsplash.com/photo-1614294149010-950b698f72c0?auto=format&fit=crop&w=800&q=80",
+        url: "https://www.roblox.com/"
+      },
+      {
+        name: "Apex Legends",
+        category: "battle",
+        type: "free",
+        label: "ÜCRETSİZ",
+        description: "Takım çalışması ve kahraman yetenekleriyle savaş.",
+        image: "https://images.unsplash.com/photo-1493711662062-fa541adto3?auto=format&fit=crop&w=800&q=80",
+        url: "https://store.steampowered.com/app/1172470/Apex_Legends/"
+      },
+      {
+        name: "Dota 2",
+        category: "casual",
+        type: "free",
+        label: "ÜCRETSİZ",
+        description: "Derin stratejiye sahip rekabetçi MOBA.",
+        image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80",
+        url: "https://store.steampowered.com/app/570/Dota_2/"
+      },
+      {
+        name: "Warframe",
+        category: "shooter",
+        type: "free",
+        label: "ÜCRETSİZ",
+        description: "Bilim kurgu evreninde hızlı tempolu aksiyon.",
+        image: "https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=800&q=80",
+        url: "https://www.warframe.com/"
+      },
+      {
+        name: "PUBG: BATTLEGROUNDS",
+        category: "battle",
+        type: "free",
+        label: "ÜCRETSİZ",
+        description: "Hayatta kalma odaklı battle royale savaşı.",
+        image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+        url: "https://store.steampowered.com/app/578080/PUBG_BATTLEGROUNDS/"
+      },
+      {
+        name: "Minecraft",
+        category: "casual",
+        type: "paid",
+        label: "ÜCRETLİ",
+        description: "Bloklarla inşa et, keşfet ve hayatta kal.",
+        image: "https://images.unsplash.com/photo-1607513746994-51f730a44832?auto=format&fit=crop&w=800&q=80",
+        url: "https://www.minecraft.net/"
+      },
+      {
+        name: "Grand Theft Auto V",
+        category: "shooter",
+        type: "paid",
+        label: "ÜCRETLİ",
+        description: "Açık dünyada aksiyon ve hikâye deneyimi.",
+        image: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=800&q=80",
+        url: "https://store.steampowered.com/app/271590/Grand_Theft_Auto_V_Enhanced/"
+      },
+      {
+        name: "Red Dead Redemption 2",
+        category: "rpg",
+        type: "paid",
+        label: "ÜCRETLİ",
+        description: "Vahşi Batı'da geniş kapsamlı açık dünya macerası.",
+        image: "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=800&q=80",
+        url: "https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/"
+      },
+      {
+        name: "Elden Ring",
+        category: "rpg",
+        type: "paid",
+        label: "ÜCRETLİ",
+        description: "Keşif, zorlu savaşlar ve fantastik bir dünya.",
+        image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
+        url: "https://store.steampowered.com/app/1245620/ELDEN_RING/"
+      }
+    ];
+
+    let activeCategory = "all";
+
+    function renderGames() {
+      const grid = document.getElementById("gameGrid");
+      const empty = document.getElementById("emptyMessage");
+      const search = document.getElementById("searchInput").value
+        .trim().toLocaleLowerCase("tr");
+      const price = document.getElementById("priceFilter").value;
+      const sort = document.getElementById("sortFilter").value;
+
+      let filtered = games.filter(game => {
+        const matchesSearch =
+          game.name.toLocaleLowerCase("tr").includes(search) ||
+          game.description.toLocaleLowerCase("tr").includes(search);
+
+        const matchesPrice = price === "all" || game.type === price;
+        const matchesCategory =
+          activeCategory === "all" || game.category === activeCategory;
+
+        return matchesSearch && matchesPrice && matchesCategory;
+      });
+
+      if (sort === "az") {
+        filtered.sort((a, b) => a.name.localeCompare(b.name, "tr"));
+      } else if (sort === "za") {
+        filtered.sort((a, b) => b.name.localeCompare(a.name, "tr"));
+      }
+
+      grid.innerHTML = filtered.map(game => `
+        <article class="game-card">
+          <div class="cover">
+            <img
+              src="${game.image}"
+              alt="${game.name} kapak görseli"
+              loading="lazy"
+              onerror="this.style.display='none'"
+            >
+            <span class="tag">${game.label}</span>
+          </div>
+          <div class="game-info">
+            <h3>${game.name}</h3>
+            <p>${game.description}</p>
+            <div class="card-bottom">
+              <span class="price ${game.type === "free" ? "free" : ""}">
+                ${game.type === "free" ? "Ücretsiz" : "Mağaza fiyatı"}
+              </span>
+              <a
+                class="game-link"
+                href="${game.url}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ${game.type === "free" ? "Oyunu edin ↗" : "Mağazaya git ↗"}
+              </a>
+            </div>
+          </div>
+        </article>
+      `).join("");
+
+      empty.style.display = filtered.length ? "none" : "block";
+    }
+
+    document.getElementById("searchInput")
+      .addEventListener("input", renderGames);
+
+    document.getElementById("priceFilter")
+      .addEventListener("change", renderGames);
+
+    document.getElementById("sortFilter")
+      .addEventListener("change", renderGames);
+
+    document.querySelectorAll(".chip").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".chip")
+          .forEach(chip => chip.classList.remove("active"));
+
+        button.classList.add("active");
+        activeCategory = button.dataset.category;
+        renderGames();
+      });
+    });
+
+    logoutBtn.addEventListener("click", async () => {
+      try {
+        await signOut(auth);
+        window.location.replace("index.html");
+      } catch (error) {
+        alert("Çıkış yapılamadı: " + error.message);
+      }
+    });
+
+    // Mağaza yalnızca oturumu açık ve e-postası doğrulanmış
+    // kullanıcıların normal gezinme akışında açılır.
+    onAuthStateChanged(auth, async user => {
+      if (!user) {
+        window.location.replace("index.html");
+        return;
+      }
+
+      try {
+        await reload(user);
+
+        if (!user.emailVerified) {
+           window.location.replace("store.html");
+          return;
+        }
+
+        userEmail.textContent = user.email || "Oyuncu";
+        loading.hidden = true;
+        store.hidden = false;
+        renderGames();
+      } catch (error) {
+        console.error("Oturum kontrol hatası:", error);
+        loading.textContent =
+          "Oturum kontrol edilemedi. Sayfayı yenileyip tekrar dene.";
+      }
+    });
+  </script>
+</body>
+</html>
+
