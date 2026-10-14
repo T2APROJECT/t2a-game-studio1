@@ -1,497 +1,344 @@
-
+```html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#10151d">
-<meta name="description" content="T2A GAME STUDIO - Ücretsiz PC oyunlarını keşfet, incele ve yasal kaynaklardan indir.">
-<title>T2A GAME STUDIO | Oyun Mağazası</title>
-<style>
-:root{
-  --bg:#10151d;--panel:#192330;--panel2:#202d3c;
-  --text:#f0f4fa;--muted:#9caec2;--accent:#65d6a0;
-  --border:#304052;--red:#ff6878;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
-font-family:Inter,"Segoe UI",Arial,sans-serif}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-a{color:inherit}
-.topbar{height:70px;background:#151d28;border-bottom:1px solid var(--border);
-display:flex;align-items:center;justify-content:space-between;padding:0 5%;
-gap:20px;position:sticky;top:0;z-index:5}
-.logo{font-size:21px;font-weight:900;letter-spacing:1px;white-space:nowrap}
-.logo span{color:var(--accent)}
-.nav{display:flex;gap:20px;align-items:center}
-.nav a{text-decoration:none;color:var(--muted);font-size:14px}
-.nav a:hover{color:var(--accent)}
-.btn{border:0;border-radius:6px;padding:11px 15px;font-weight:700;
-background:var(--accent);color:#10251c}
-.btn:hover{filter:brightness(1.08)}
-.btn.secondary{background:#29394a;color:var(--text);border:1px solid var(--border)}
-.btn.danger{background:#4b2530;color:#ffb6c0}
-main{max-width:1400px;margin:auto;padding:28px 5% 60px}
-.hero{min-height:270px;border:1px solid #344e59;border-radius:14px;
-padding:36px;display:flex;align-items:center;justify-content:space-between;
-gap:25px;overflow:hidden;background:
-radial-gradient(ellipse at 85% 30%,#235d4a 0,transparent 37%),
-linear-gradient(115deg,#1b2b3b,#14251f 70%,#172f2c)}
-.hero h1{font-size:clamp(30px,4vw,48px);line-height:1.1;margin:10px 0}
-.hero p{max-width:580px;color:#c0d0dc;line-height:1.7}
-.tag{display:inline-block;color:var(--accent);font-size:12px;
-font-weight:800;letter-spacing:2px}
-.hero-art{font-size:105px;filter:drop-shadow(0 8px 22px #0008)}
-.searchrow{display:flex;gap:12px;margin:28px 0 18px;flex-wrap:wrap}
-.searchrow input,.searchrow select,.field{
-background:var(--panel);border:1px solid var(--border);
-border-radius:7px;padding:13px;color:var(--text);outline:none}
-.searchrow input{flex:1;min-width:200px}
-.searchrow select{min-width:160px}
-.searchrow input:focus,.field:focus{border-color:var(--accent)}
-.categories{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:28px}
-.chip{border:1px solid var(--border);background:var(--panel);
-color:var(--muted);padding:9px 14px;border-radius:20px}
-.chip.active,.chip:hover{background:var(--accent);color:#10251c;border-color:var(--accent)}
-.section-head{display:flex;align-items:center;justify-content:space-between;
-gap:12px;margin:30px 0 16px}
-.section-head h2{font-size:23px;margin:0}
-.muted{color:var(--muted);font-size:13px}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.card{background:var(--panel);border:1px solid var(--border);
-border-radius:10px;overflow:hidden;transition:transform .18s,border-color .18s}
-.card:hover{transform:translateY(-3px);border-color:#5a7a8d}
-.cover{height:155px;display:flex;align-items:center;justify-content:center;
-font-size:64px;position:relative;background:linear-gradient(135deg,#273e50,#182d2d)}
-.cover::after{content:"";position:absolute;inset:0;
-background:linear-gradient(0deg,#111b28aa,transparent 70%);pointer-events:none}
-.cover-icon{filter:drop-shadow(0 4px 10px #0007)}
-.free{position:absolute;z-index:1;top:12px;left:12px;background:#173f32;
-color:#9ff0c5;padding:6px 9px;border-radius:4px;font-size:11px;font-weight:800}
-.card-body{padding:16px}
-.card-title{display:flex;align-items:start;justify-content:space-between;gap:8px}
-.card h3{font-size:17px;margin:0 0 7px}
-.rating{color:#ffd477;font-size:13px;white-space:nowrap}
-.card p{color:var(--muted);font-size:13px;line-height:1.55;min-height:40px}
-.meta{font-size:12px;color:var(--muted);margin:12px 0}
-.card-actions{display:flex;gap:8px}
-.card-actions .btn{flex:1;text-align:center;text-decoration:none;font-size:12px;padding:10px 7px}
-.empty{grid-column:1/-1;text-align:center;padding:45px;color:var(--muted);
-background:var(--panel);border-radius:10px}
-.info{margin-top:35px;padding:18px;background:#172a27;border:1px solid #28513f;
-border-radius:9px;color:#c7e8d8;font-size:13px;line-height:1.7}
-footer{border-top:1px solid var(--border);padding:25px 5%;color:var(--muted);
-font-size:12px;text-align:center}
-.modal{display:none;position:fixed;inset:0;z-index:20;background:#000b;
-padding:20px;overflow:auto;align-items:center;justify-content:center}
-.modal.show{display:flex}
-.dialog{width:min(680px,100%);max-height:90vh;overflow:auto;
-background:#182330;border:1px solid var(--border);border-radius:12px;padding:24px}
-.dialog h2{margin-top:0}
-.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
-.formgroup{display:flex;flex-direction:column;gap:6px;margin-bottom:13px}
-.formgroup label{font-size:13px;color:#c2d0df}
-.field{width:100%;min-width:0}
-textarea.field{min-height:90px;resize:vertical}
-.full{grid-column:1/-1}
-.modal-actions{display:flex;gap:9px;justify-content:flex-end;margin-top:14px}
-.review{border-top:1px solid var(--border);padding:12px 0}
-.review strong{font-size:13px}
-.review p{color:var(--muted);font-size:13px;line-height:1.5}
-.admin-list{display:grid;gap:10px}
-.admin-item{display:flex;align-items:center;justify-content:space-between;
-gap:12px;padding:12px;background:var(--panel2);border-radius:7px}
-.admin-item button{margin:3px}
-.small{font-size:11px;color:var(--muted);line-height:1.6}
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-.nav a{display:none}.hero-art{font-size:75px}}
-@media(max-width:580px){.grid{grid-template-columns:1fr}
-.hero{padding:24px}.hero-art{display:none}.formgrid{grid-template-columns:1fr}
-.full{grid-column:auto}.topbar{padding:0 4%}.logo{font-size:17px}
-main{padding:20px 4% 40px}.section-head h2{font-size:20px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T2A GAME STUDİO | Hesap</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      color: #e8edf7;
+      background:
+        radial-gradient(ellipse at top, #203a57 0%, transparent 55%),
+        #0b1018;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 430px;
+      padding: 32px;
+      border: 1px solid #34445b;
+      border-radius: 18px;
+      background: rgba(19, 28, 42, .96);
+      box-shadow: 0 20px 70px #0008;
+    }
+
+    .logo {
+      margin: 0 0 10px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .logo span { color: #56a0ff; }
+
+    .subtitle {
+      margin: 0 0 26px;
+      color: #a9b7ca;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    button, input { font: inherit; }
+
+    .tab, .submit, .logout {
+      padding: 12px;
+      border: 0;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    .tab {
+      color: #bdc8d8;
+      background: #202c3d;
+    }
+
+    .tab.active {
+      color: white;
+      background: #276fd0;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 8px;
+      color: #d6dfeb;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      color: white;
+      background: #0d1521;
+      border: 1px solid #394960;
+      border-radius: 9px;
+      outline: none;
+    }
+
+    input:focus { border-color: #56a0ff; }
+
+    .submit, .logout {
+      width: 100%;
+      margin-top: 22px;
+      color: white;
+      background: #2878e7;
+      font-weight: bold;
+    }
+
+    button:disabled { opacity: .6; cursor: wait; }
+
+    .message {
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .message.error { color: #ff8e96; }
+    .message.success { color: #7ce4ac; }
+
+    .hidden { display: none !important; }
+
+    .account {
+      text-align: center;
+    }
+
+    .avatar {
+      display: grid;
+      place-items: center;
+      width: 76px;
+      height: 76px;
+      margin: 20px auto;
+      border-radius: 50%;
+      background: #233d5c;
+      color: #83baff;
+      font-size: 32px;
+    }
+
+    .email {
+      overflow-wrap: anywhere;
+      color: #9fbedf;
+    }
+
+    .logout { background: #34445a; }
+
+    .note {
+      margin-top: 22px;
+      color: #8292a8;
+      font-size: 12px;
+      line-height: 1.5;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-<header class="topbar">
-  <a class="logo" href="#" style="text-decoration:none">T2A <span>GAME STUDIO</span></a>
-  <nav class="nav">
-    <a href="#store">Mağaza</a>
-    <a href="#games">Oyunlar</a>
-    <a href="#about">Hakkımızda</a>
-  </nav>
-  <button class="btn secondary" onclick="openAdmin()">⚙ Yönetici</button>
-</header>
+  <main class="container">
+    <h1 class="logo">T2A GAME <span>STUDİO</span></h1>
+    <p class="subtitle">Oyun dünyasına katıl.</p>
 
-<main id="store">
-  <section class="hero">
-    <div>
-      <span class="tag">OYUN DÜNYASINA HOŞ GELDİN</span>
-      <h1>Yeni oyununu<br>hemen keşfet.</h1>
-      <p>T2A GAME STUDIO'da ücretsiz PC oyunlarını keşfet,
-      kategorilere göz at ve oyunların resmî indirme sayfalarına ulaş.</p>
-      <a class="btn" href="#games" style="display:inline-block;text-decoration:none">Oyunları keşfet ↓</a>
-    </div>
-    <div class="hero-art" aria-hidden="true">🎮</div>
-  </section>
-
-  <div class="searchrow">
-    <input id="search" type="search" placeholder="🔎 Oyun adı veya açıklama ara..." aria-label="Oyun ara">
-    <select id="sort" aria-label="Sıralama">
-      <option value="popular">Öne çıkanlar</option>
-      <option value="name">İsme göre A-Z</option>
-      <option value="rating">En yüksek puan</option>
-    </select>
-  </div>
-
-  <div class="categories" id="categories"></div>
-
-  <div class="section-head" id="games">
-    <h2>🕹️ Ücretsiz PC Oyunları</h2>
-    <span class="muted" id="count"></span>
-  </div>
-  <div class="grid" id="gameGrid"></div>
-
-  <section class="info" id="about">
-    <strong>🛡️ T2A güvenli indirme ilkesi</strong><br>
-    Bu sitedeki indirme düğmeleri oyunların resmî sayfalarına yönlendirir.
-    Üçüncü taraf dosyaları burada barındırmıyoruz. İndirmeden önce kaynak
-    adresini kontrol et ve işletim sistemine uygun sürümü seç.
-  </section>
-</main>
-
-<footer>
-  T2A GAME STUDIO © <span id="year"></span> · Bağımsız oyun keşif platformu.<br>
-  Bu site Steam ile bağlantılı değildir. Oyun adları ve markaları ilgili sahiplerine aittir.
-</footer>
-
-<!-- Oyun detayları ve yorumlar -->
-<div class="modal" id="detailModal" role="dialog" aria-modal="true">
-  <div class="dialog">
-    <button class="btn secondary" style="float:right" onclick="closeModal('detailModal')">Kapat ✕</button>
-    <div id="detailContent"></div>
-  </div>
-</div>
-
-<!-- Yönetici paneli -->
-<div class="modal" id="adminModal" role="dialog" aria-modal="true">
-  <div class="dialog">
-    <button class="btn secondary" style="float:right" onclick="closeModal('adminModal')">Kapat ✕</button>
-    <h2>⚙ Yönetici paneli</h2>
-    <p class="muted">Oyun kataloğunu yönet.</p>
-    <div id="adminLogin">
-      <div class="formgroup">
-        <label for="adminPassword">Demo yönetici parolası</label>
-        <input class="field" id="adminPassword" type="password" placeholder="Parolayı gir">
+    <section id="authSection">
+      <div class="tabs">
+        <button id="loginTab" class="tab active" type="button">Giriş Yap</button>
+        <button id="registerTab" class="tab" type="button">Kayıt Ol</button>
       </div>
-      <button class="btn" onclick="loginAdmin()">Giriş yap</button>
-      <p id="loginMessage" class="small"></p>
-      <p class="small">Demo parola: <code>T2A-demo-2026</code></p>
-    </div>
-    <div id="adminArea" hidden>
-      <div class="info" style="margin:10px 0 18px">
-        Demo modundasın. Bu panel gerçek bir güvenlik sistemi değildir.
-        Parola ve kodlar tarayıcıdan görülebilir; herkese açık yayında gerçek
-        yönetici hesabı kullanma.
-      </div>
-      <h3 id="formTitle">Yeni oyun ekle</h3>
-      <form id="gameForm">
-        <input type="hidden" id="editId">
-        <div class="formgrid">
-          <div class="formgroup">
-            <label for="gameName">Oyun adı *</label>
-            <input class="field" id="gameName" required maxlength="80">
-          </div>
-          <div class="formgroup">
-            <label for="gameCategory">Kategori *</label>
-            <select class="field" id="gameCategory">
-              <option>Aksiyon</option><option>FPS</option><option>Macera</option>
-              <option>Yarış</option><option>Strateji</option><option>Simülasyon</option>
-              <option>Bağımsız</option><option>Diğer</option>
-            </select>
-          </div>
-          <div class="formgroup">
-            <label for="gameIcon">Kart simgesi (emoji)</label>
-            <input class="field" id="gameIcon" value="🎮" maxlength="8">
-          </div>
-          <div class="formgroup">
-            <label for="gameColor">Kart rengi</label>
-            <select class="field" id="gameColor">
-              <option value="#273e50">Mavi</option><option value="#244a3b">Yeşil</option>
-              <option value="#50304b">Mor</option><option value="#5a3929">Turuncu</option>
-              <option value="#4a3030">Kırmızı</option>
-            </select>
-          </div>
-          <div class="formgroup full">
-            <label for="gameDesc">Açıklama *</label>
-            <textarea class="field" id="gameDesc" required maxlength="400"></textarea>
-          </div>
-          <div class="formgroup full">
-            <label for="gameUrl">Resmî indirme / oyun sayfası URL'si (https://) *</label>
-            <input class="field" id="gameUrl" type="url" required placeholder="https://...">
-          </div>
-        </div>
-        <div class="modal-actions">
-          <button type="button" class="btn secondary" onclick="resetForm()">Temizle</button>
-          <button class="btn" type="submit">Oyunu kaydet</button>
-        </div>
+
+      <form id="authForm">
+        <label for="email">E-posta adresi</label>
+        <input
+          id="email"
+          type="email"
+          autocomplete="email"
+          placeholder="ornek@email.com"
+          required
+        >
+
+        <label for="password">Şifre (en az 6 karakter)</label>
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          minlength="6"
+          placeholder="Şifren"
+          required
+        >
+
+        <button id="submitButton" class="submit" type="submit">
+          Giriş Yap
+        </button>
       </form>
-      <hr style="border-color:var(--border);margin:22px 0">
-      <h3>Mevcut oyunlar</h3>
-      <div id="adminList" class="admin-list"></div>
-      <div class="modal-actions">
-        <button class="btn secondary" onclick="logoutAdmin()">Oturumu kapat</button>
-      </div>
-    </div>
-  </div>
-</div>
 
-<script>
-"use strict";
+      <div id="message" class="message" role="status" aria-live="polite"></div>
+    </section>
 
-const STORAGE_KEY = "t2a_games_v1";
-const REVIEW_KEY = "t2a_reviews_v1";
-const CATEGORIES = ["Tümü","Aksiyon","FPS","Macera","Yarış","Strateji","Simülasyon","Bağımsız","Diğer"];
+    <section id="accountSection" class="account hidden">
+      <div class="avatar">✓</div>
+      <h2>Hoş geldin!</h2>
+      <p>Hesabınla giriş yaptın.</p>
+      <p id="accountEmail" class="email"></p>
+      <button id="logoutButton" class="logout" type="button">
+        Çıkış Yap
+      </button>
+      <div id="accountMessage" class="message" role="status"></div>
+    </section>
 
-// Başlangıç kataloğu: resmî proje/oyun sayfaları.
-// Site bu oyunları barındırmaz; resmî sayfalara yönlendirir.
-const DEFAULT_GAMES = [
- {id:"supertuxkart",name:"SuperTuxKart",category:"Yarış",icon:"🏎️",color:"#244a3b",
-  desc:"Eğlenceli pistlerde yarışabileceğin ücretsiz ve açık kaynaklı kart yarışı oyunu.",
-  url:"https://supertuxkart.net/",featured:1},
- {id:"xonotic",name:"Xonotic",category:"FPS",icon:"🎯",color:"#273e50",
-  desc:"Hızlı hareket ve rekabetçi çatışmalar sunan ücretsiz, açık kaynaklı arena FPS.",
-  url:"https://xonotic.org/",featured:2},
- {id:"0ad",name:"0 A.D.",category:"Strateji",icon:"🏛️",color:"#5a3929",
-  desc:"Antik çağlarda geçen, medeniyet kurup ordularını yönettiğin gerçek zamanlı strateji oyunu.",
-  url:"https://play0ad.com/",featured:3},
- {id:"wesnoth",name:"The Battle for Wesnoth",category:"Strateji",icon:"⚔️",color:"#50304b",
-  desc:"Fantezi dünyasında sıra tabanlı savaşlar, senaryolar ve topluluk kampanyaları.",
-  url:"https://www.wesnoth.org/",featured:4},
- {id:"openttd",name:"OpenTTD",category:"Simülasyon",icon:"🚂",color:"#273e50",
-  desc:"Demiryolu, kara yolu, hava ve deniz taşımacılığı ağı kurduğun ulaşım simülasyonu.",
-  url:"https://www.openttd.org/",featured:5},
- {id:"luanti",name:"Luanti",category:"Macera",icon:"🧱",color:"#244a3b",
-  desc:"Dünyalar kurabileceğin, keşif ve topluluk içeriklerine odaklanan açık kaynaklı voxel platformu.",
-  url:"https://www.luanti.org/",featured:6},
- {id:"mindustry",name:"Mindustry",category:"Bağımsız",icon:"🏭",color:"#5a3929",
-  desc:"Kaynak toplama, üretim hatları kurma ve üs savunmasını birleştiren strateji oyunu.",
-  url:"https://mindustrygame.github.io/",featured:7},
- {id:"teeworlds",name:"Teeworlds",category:"Aksiyon",icon:"🪝",color:"#50304b",
-  desc:"Çevrim içi çok oyunculu, hızlı ve kendine özgü kancalı hareket mekaniklerine sahip aksiyon oyunu.",
-  url:"https://www.teeworlds.com/",featured:8}
-];
+    <p class="note">
+      Hesabın Firebase Authentication ile yönetilir.
+      Şifren bu sayfada saklanmaz.
+    </p>
+  </main>
 
-function readJSON(key,fallback){
-  try { const x=JSON.parse(localStorage.getItem(key)); return x ?? fallback; }
-  catch { return fallback; }
-}
-let games=readJSON(STORAGE_KEY,null);
-if(!Array.isArray(games)){games=DEFAULT_GAMES;saveGames();}
-let reviews=readJSON(REVIEW_KEY,{});
-if(!reviews || typeof reviews!=="object" || Array.isArray(reviews)) reviews={};
+  <script type="module">
+    import { initializeApp } from
+      "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-function saveGames(){localStorage.setItem(STORAGE_KEY,JSON.stringify(games));}
-function saveReviews(){localStorage.setItem(REVIEW_KEY,JSON.stringify(reviews));}
-function esc(value){
- return String(value??"").replace(/[&<>"']/g,c=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
-}
-function safeURL(value){
- try{
-  const u=new URL(value);
-  return u.protocol==="https:" ? u.href : null;
- }catch{return null;}
-}
-function getReviews(id){return Array.isArray(reviews[id])?reviews[id]:[];}
-function rating(id){
- const r=getReviews(id);
- return r.length ? r.reduce((sum,x)=>sum+Number(x.stars||0),0)/r.length : 0;
-}
-function stars(value){return "★".repeat(value)+"☆".repeat(5-value);}
-let activeCategory="Tümü";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut
+    } from
+      "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-function renderCategories(){
- document.getElementById("categories").innerHTML=CATEGORIES.map(c=>
-  `<button class="chip ${activeCategory===c?"active":""}" data-category="${esc(c)}">${esc(c)}</button>`
- ).join("");
- document.querySelectorAll("[data-category]").forEach(b=>b.addEventListener("click",()=>{
-  activeCategory=b.dataset.category;renderCategories();renderGames();
- }));
-}
-function renderGames(){
- const query=document.getElementById("search").value.trim().toLocaleLowerCase("tr");
- const sort=document.getElementById("sort").value;
- let list=games.filter(g=>
-  (activeCategory==="Tümü"||g.category===activeCategory)&&
-  (String(g.name+" "+g.desc+" "+g.category).toLocaleLowerCase("tr").includes(query))
- );
- if(sort==="name")list.sort((a,b)=>a.name.localeCompare(b.name,"tr"));
- else if(sort==="rating")list.sort((a,b)=>rating(b.id)-rating(a.id));
- else list.sort((a,b)=>(a.featured||999)-(b.featured||999));
- document.getElementById("count").textContent=list.length+" oyun";
- const grid=document.getElementById("gameGrid");
- if(!list.length){
-  grid.innerHTML='<div class="empty">Bu aramayla eşleşen oyun bulunamadı.<br>Başka bir kelime veya kategori dene.</div>';
-  return;
- }
- grid.innerHTML=list.map(g=>{
-  const r=rating(g.id),n=getReviews(g.id).length;
-  const url=safeURL(g.url);
-  return `<article class="card">
-   <div class="cover" style="background:linear-gradient(135deg,${esc(g.color||"#273e50")},#182d2d)">
-    <span class="free">ÜCRETSİZ</span><span class="cover-icon">${esc(g.icon||"🎮")}</span>
-   </div>
-   <div class="card-body">
-    <div class="card-title"><h3>${esc(g.name)}</h3>
-     <span class="rating" title="${r.toFixed(1)} / 5">${r?`★ ${r.toFixed(1)}`:"☆☆☆☆☆"}</span>
-    </div>
-    <span class="muted">${esc(g.category)} · ${n} yorum</span>
-    <p>${esc(g.desc)}</p>
-    <div class="card-actions">
-     <button class="btn secondary" data-detail="${esc(g.id)}">İncele</button>
-     ${url?`<a class="btn" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Resmî sayfa ↗</a>`:"<span class='muted'>Geçersiz URL</span>"}
-    </div>
-   </div>
-  </article>`;
- }).join("");
- document.querySelectorAll("[data-detail]").forEach(b=>b.addEventListener("click",()=>openDetails(b.dataset.detail)));
-}
-document.getElementById("search").addEventListener("input",renderGames);
-document.getElementById("sort").addEventListener("change",renderGames);
+    // Firebase Console > Project settings > Your apps > Config
+    // Kendi proje bilgilerinle değiştir.
+    const firebaseConfig = {
+      apiKey: "AIzaSyAl1iMlEFRSFAoFP_nWL1lGjeVuoqY8F8g",
+      authDomain: "t2a-game-studio.firebaseapp.com",
+      projectId: "t2a-game-studio",
+      storageBucket: "t2a-game-studio.firebasestorage.app",
+      messagingSenderId: "284781981543",
+      appId: "1:284781981543:web:994dc99cef0142a97489c2"
+    };
 
-function openDetails(id){
- const g=games.find(x=>x.id===id);if(!g)return;
- const r=getReviews(id),url=safeURL(g.url);
- document.getElementById("detailContent").innerHTML=`
-  <span class="tag">${esc(g.category)} · ÜCRETSİZ</span>
-  <h2 style="font-size:29px;margin-bottom:8px">${esc(g.icon||"🎮")} ${esc(g.name)}</h2>
-  <p style="color:var(--muted);line-height:1.7">${esc(g.desc)}</p>
-  <p class="rating">${rating(id)?`★ ${rating(id).toFixed(1)} / 5`:"Henüz puan yok"} · ${r.length} yorum</p>
-  ${url?`<a class="btn" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Resmî oyun sayfasına git ↗</a>`:""}
-  <hr style="border-color:var(--border);margin:22px 0">
-  <h3>Oyunu değerlendir</h3>
-  <form id="reviewForm">
-   <div class="formgroup"><label for="reviewName">Takma ad</label>
-    <input class="field" id="reviewName" maxlength="30" placeholder="Oyuncu"></div>
-   <div class="formgroup"><label for="reviewStars">Puan</label>
-    <select class="field" id="reviewStars"><option value="5">★★★★★ - Harika</option>
-    <option value="4">★★★★☆ - Çok iyi</option><option value="3">★★★☆☆ - İyi</option>
-    <option value="2">★★☆☆☆ - Kötü</option><option value="1">★☆☆☆☆ - Çok kötü</option></select></div>
-   <div class="formgroup"><label for="reviewText">Yorum</label>
-    <textarea class="field" id="reviewText" required maxlength="500" placeholder="Oyun hakkında ne düşünüyorsun?"></textarea></div>
-   <button class="btn" type="submit">Yorumu kaydet</button>
-  </form>
-  <h3 style="margin-top:26px">Oyuncu yorumları</h3>
-  <div>${r.length?r.slice().reverse().map(x=>`
-   <div class="review"><strong>${esc(x.name)}</strong>
-   <div class="rating">${stars(Number(x.stars)||0)}</div>
-   <p>${esc(x.text)}</p><span class="small">${esc(x.date||"")}</span></div>`).join("")
-   :'<p class="muted">Henüz yorum yapılmamış. İlk yorumu sen yaz!</p>'}</div>
-  <p class="small">Yorumlar bu tarayıcıda saklanır; diğer ziyaretçilere gönderilmez.</p>`;
- document.getElementById("reviewForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const name=document.getElementById("reviewName").value.trim()||"Oyuncu";
-  const text=document.getElementById("reviewText").value.trim();
-  const starsValue=Number(document.getElementById("reviewStars").value);
-  if(!text)return;
-  reviews[id]=getReviews(id);
-  reviews[id].push({name:name.slice(0,30),text:text.slice(0,500),stars:starsValue,
-   date:new Date().toLocaleDateString("tr-TR")});
-  saveReviews();openDetails(id);renderGames();
- });
- document.getElementById("detailModal").classList.add("show");
-}
-function closeModal(id){document.getElementById(id).classList.remove("show");}
-document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{
- if(e.target===m)closeModal(m.id);
-}));
-document.addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelectorAll(".modal").forEach(m=>m.classList.remove("show"));});
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-let adminLoggedIn=false;
-function openAdmin(){
- document.getElementById("adminModal").classList.add("show");
- document.getElementById("adminLogin").hidden=adminLoggedIn;
- document.getElementById("adminArea").hidden=!adminLoggedIn;
- if(adminLoggedIn)renderAdminList();
-}
-function loginAdmin(){
- // Yalnızca yerel prototip içindir. Bu parola bir güvenlik önlemi değildir.
- if(document.getElementById("adminPassword").value==="T2A-demo-2026"){
-  adminLoggedIn=true;
-  document.getElementById("adminLogin").hidden=true;
-  document.getElementById("adminArea").hidden=false;
-  document.getElementById("loginMessage").textContent="";
-  renderAdminList();
- }else{
-  document.getElementById("loginMessage").textContent="Parola yanlış. Tekrar dene.";
- }
-}
-function logoutAdmin(){
- adminLoggedIn=false;
- document.getElementById("adminPassword").value="";
- document.getElementById("adminLogin").hidden=false;
- document.getElementById("adminArea").hidden=true;
-}
-function renderAdminList(){
- document.getElementById("adminList").innerHTML=games.map(g=>`
- <div class="admin-item"><div><strong>${esc(g.name)}</strong><br><span class="small">${esc(g.category)}</span></div>
- <div><button class="btn secondary" data-edit="${esc(g.id)}">Düzenle</button>
- <button class="btn danger" data-delete="${esc(g.id)}">Sil</button></div></div>`).join("")||
- '<p class="muted">Henüz oyun yok.</p>';
- document.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>editGame(b.dataset.edit)));
- document.querySelectorAll("[data-delete]").forEach(b=>b.addEventListener("click",()=>deleteGame(b.dataset.delete)));
-}
-function resetForm(){
- document.getElementById("gameForm").reset();
- document.getElementById("editId").value="";
- document.getElementById("gameIcon").value="🎮";
- document.getElementById("formTitle").textContent="Yeni oyun ekle";
-}
-function editGame(id){
- const g=games.find(x=>x.id===id);if(!g)return;
- document.getElementById("editId").value=g.id;
- document.getElementById("gameName").value=g.name;
- document.getElementById("gameCategory").value=CATEGORIES.includes(g.category)?g.category:"Diğer";
- document.getElementById("gameIcon").value=g.icon||"🎮";
- document.getElementById("gameColor").value=g.color||"#273e50";
- document.getElementById("gameDesc").value=g.desc;
- document.getElementById("gameUrl").value=g.url;
- document.getElementById("formTitle").textContent="Oyunu düzenle";
- document.getElementById("gameName").scrollIntoView({behavior:"smooth",block:"center"});
-}
-function deleteGame(id){
- const g=games.find(x=>x.id===id);if(!g)return;
- if(!confirm('"'+g.name+'" oyununu silmek istiyor musun?'))return;
- games=games.filter(x=>x.id!==id);saveGames();
- renderAdminList();renderGames();resetForm();
-}
-document.getElementById("gameForm").addEventListener("submit",e=>{
- e.preventDefault();
- if(!adminLoggedIn)return;
- const name=document.getElementById("gameName").value.trim();
- const desc=document.getElementById("gameDesc").value.trim();
- const url=safeURL(document.getElementById("gameUrl").value.trim());
- if(!url){alert("Lütfen https:// ile başlayan geçerli bir resmî URL gir.");return;}
- if(!name||!desc)return;
- const editId=document.getElementById("editId").value;
- const existing=editId?games.find(g=>g.id===editId):null;
- const game={
-  id:existing?existing.id:("custom-"+Date.now()),
-  name,category:document.getElementById("gameCategory").value,
-  icon:document.getElementById("gameIcon").value.trim()||"🎮",
-  color:document.getElementById("gameColor").value,desc,url,
-  featured:existing?existing.featured:games.length+1
- };
- if(existing)games=games.map(g=>g.id===editId?game:g);
- else games.push(game);
- saveGames();resetForm();renderAdminList();renderGames();
- alert("Oyun kataloğa kaydedildi.");
-});
-document.getElementById("year").textContent=new Date().getFullYear();
-renderCategories();renderGames();
-</script>
+    const authSection = document.getElementById("authSection");
+    const accountSection = document.getElementById("accountSection");
+    const authForm = document.getElementById("authForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const submitButton = document.getElementById("submitButton");
+    const message = document.getElementById("message");
+    const accountMessage = document.getElementById("accountMessage");
+    const accountEmail = document.getElementById("accountEmail");
+    const loginTab = document.getElementById("loginTab");
+    const registerTab = document.getElementById("registerTab");
+    const logoutButton = document.getElementById("logoutButton");
+
+    let mode = "login";
+    let busy = false;
+
+    function showMessage(text, type = "error") {
+      message.textContent = text;
+      message.className = "message " + type;
+    }
+
+    function setMode(newMode) {
+      mode = newMode;
+      const registering = mode === "register";
+
+      loginTab.classList.toggle("active", !registering);
+      registerTab.classList.toggle("active", registering);
+      submitButton.textContent = registering ? "Hesap Oluştur" : "Giriş Yap";
+      passwordInput.autocomplete =
+        registering ? "new-password" : "current-password";
+
+      showMessage("");
+    }
+
+    loginTab.addEventListener("click", () => setMode("login"));
+    registerTab.addEventListener("click", () => setMode("register"));
+
+    function friendlyError(error) {
+      const messages = {
+        "auth/email-already-in-use": "Bu e-posta adresiyle zaten hesap var.",
+        "auth/invalid-email": "E-posta adresi geçerli değil.",
+        "auth/weak-password": "Daha güçlü bir şifre belirle.",
+        "auth/invalid-credential": "E-posta veya şifre hatalı.",
+        "auth/user-not-found": "Bu e-posta ile kayıtlı hesap bulunamadı.",
+        "auth/wrong-password": "Şifre hatalı.",
+        "auth/too-many-requests": "Çok fazla deneme yapıldı. Bir süre sonra tekrar dene.",
+        "auth/network-request-failed": "İnternet bağlantını kontrol et.",
+        "auth/operation-not-allowed": "Firebase'de Email/Password girişini kontrol et.",
+        "auth/unauthorized-domain": "GitHub Pages alan adını Firebase Authorized domains bölümüne ekle.",
+        "auth/configuration-not-found": "Firebase Authentication ayarlarını kontrol et."
+      };
+
+      return messages[error.code] ||
+        "İşlem başarısız oldu. Firebase ayarlarını kontrol et. (" +
+        (error.code || "bilinmeyen hata") + ")";
+    }
+
+    authForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (busy) return;
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      busy = true;
+      submitButton.disabled = true;
+      showMessage(mode === "register" ? "Hesap oluşturuluyor..." : "Giriş yapılıyor...", "success");
+
+      try {
+        if (mode === "register") {
+          await createUserWithEmailAndPassword(auth, email, password);
+        } else {
+          await signInWithEmailAndPassword(auth, email, password);
+        }
+      } catch (error) {
+        showMessage(friendlyError(error));
+      } finally {
+        busy = false;
+        submitButton.disabled = false;
+      }
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      logoutButton.disabled = true;
+      accountMessage.textContent = "";
+
+      try {
+        await signOut(auth);
+      } catch (error) {
+        accountMessage.textContent = "Çıkış yapılamadı. Tekrar dene.";
+      } finally {
+        logoutButton.disabled = false;
+      }
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        authSection.classList.add("hidden");
+        accountSection.classList.remove("hidden");
+        accountEmail.textContent = user.email || "";
+      } else {
+        accountSection.classList.add("hidden");
+        authSection.classList.remove("hidden");
+        emailInput.value = "";
+        passwordInput.value = "";
+        setMode("login");
+      }
+    });
+  </script>
 </body>
 </html>
-
+```
