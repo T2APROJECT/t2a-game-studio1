@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -57,7 +57,16 @@
 
     button, input { font: inherit; }
 
-    .tab, .submit, .logout {
+    button {
+      transition: background .2s, opacity .2s;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    .tab, .submit, .secondary {
       padding: 12px;
       border: 0;
       border-radius: 9px;
@@ -93,20 +102,20 @@
 
     input:focus { border-color: #56a0ff; }
 
-    .submit, .logout {
+    .submit, .secondary {
       width: 100%;
-      margin-top: 22px;
+      margin-top: 16px;
       color: white;
-      background: #2878e7;
       font-weight: bold;
     }
 
-    button:disabled { opacity: .6; cursor: wait; }
+    .submit { background: #2878e7; }
+    .secondary { background: #34445a; }
 
     .message {
       margin-top: 16px;
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.6;
       overflow-wrap: anywhere;
     }
 
@@ -115,9 +124,7 @@
 
     .hidden { display: none !important; }
 
-    .account {
-      text-align: center;
-    }
+    .account { text-align: center; }
 
     .avatar {
       display: grid;
@@ -136,8 +143,6 @@
       color: #9fbedf;
     }
 
-    .logout { background: #34445a; }
-
     .note {
       margin-top: 22px;
       color: #8292a8;
@@ -145,17 +150,38 @@
       line-height: 1.5;
       text-align: center;
     }
+
+    .verify-icon {
+      font-size: 48px;
+      text-align: center;
+      margin: 10px 0 18px;
+    }
+
+    h2 { text-align: center; }
+
+    .center { text-align: center; }
+
+    @media (max-width: 420px) {
+      .container { padding: 24px 20px; }
+      .logo { font-size: 25px; }
+    }
   </style>
 </head>
+
 <body>
   <main class="container">
     <h1 class="logo">T2A GAME <span>STUDİO</span></h1>
     <p class="subtitle">Oyun dünyasına katıl.</p>
 
+    <!-- Giriş ve kayıt -->
     <section id="authSection">
       <div class="tabs">
-        <button id="loginTab" class="tab active" type="button">Giriş Yap</button>
-        <button id="registerTab" class="tab" type="button">Kayıt Ol</button>
+        <button id="loginTab" class="tab active" type="button">
+          Giriş Yap
+        </button>
+        <button id="registerTab" class="tab" type="button">
+          Kayıt Ol
+        </button>
       </div>
 
       <form id="authForm">
@@ -183,22 +209,57 @@
         </button>
       </form>
 
-      <div id="message" class="message" role="status" aria-live="polite"></div>
+      <div id="message" class="message"
+           role="status" aria-live="polite"></div>
     </section>
 
+    <!-- E-posta doğrulama ekranı -->
+    <section id="verifySection" class="hidden">
+      <div class="verify-icon">✉️</div>
+      <h2>E-postanı doğrula</h2>
+
+      <p class="subtitle">
+        Hesabını kullanabilmek için e-posta adresine gönderdiğimiz
+        doğrulama bağlantısına tıkla.
+      </p>
+
+      <p id="verifyEmail" class="email center"></p>
+
+      <div id="verifyMessage" class="message"
+           role="status" aria-live="polite">
+        Gelen kutunu ve spam klasörünü kontrol et.
+      </div>
+
+      <button id="resendButton" class="submit" type="button">
+        Doğrulama e-postasını tekrar gönder
+      </button>
+
+      <button id="checkButton" class="secondary" type="button">
+        Doğrulamayı kontrol et
+      </button>
+
+      <button id="verifyLogoutButton" class="secondary" type="button">
+        Çıkış yap
+      </button>
+    </section>
+
+    <!-- Giriş başarılı -->
     <section id="accountSection" class="account hidden">
       <div class="avatar">✓</div>
       <h2>Hoş geldin!</h2>
-      <p>Hesabınla giriş yaptın.</p>
+      <p>E-posta adresin doğrulandı ve giriş yaptın.</p>
       <p id="accountEmail" class="email"></p>
-      <button id="logoutButton" class="logout" type="button">
+
+      <button id="logoutButton" class="secondary" type="button">
         Çıkış Yap
       </button>
-      <div id="accountMessage" class="message" role="status"></div>
+
+      <div id="accountMessage" class="message"
+           role="status" aria-live="polite"></div>
     </section>
 
     <p class="note">
-      Hesabın Firebase Authentication ile yönetilir.
+      Hesap işlemleri Firebase Authentication ile yönetilir.
       Şifren bu sayfada saklanmaz.
     </p>
   </main>
@@ -212,12 +273,13 @@
       createUserWithEmailAndPassword,
       signInWithEmailAndPassword,
       onAuthStateChanged,
-      signOut
+      signOut,
+      sendEmailVerification,
+      reload
     } from
       "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
     // Firebase Console > Project settings > Your apps > Config
-    // Kendi proje bilgilerinle değiştir.
     const firebaseConfig = {
       apiKey: "AIzaSyAl1iMlEFRSFAoFP_nWL1lGjeVuoqY8F8g",
       authDomain: "t2a-game-studio.firebaseapp.com",
@@ -230,25 +292,34 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    const authSection = document.getElementById("authSection");
-    const accountSection = document.getElementById("accountSection");
-    const authForm = document.getElementById("authForm");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const submitButton = document.getElementById("submitButton");
-    const message = document.getElementById("message");
-    const accountMessage = document.getElementById("accountMessage");
-    const accountEmail = document.getElementById("accountEmail");
-    const loginTab = document.getElementById("loginTab");
-    const registerTab = document.getElementById("registerTab");
-    const logoutButton = document.getElementById("logoutButton");
+    const $ = (id) => document.getElementById(id);
+
+    const authSection = $("authSection");
+    const verifySection = $("verifySection");
+    const accountSection = $("accountSection");
+    const authForm = $("authForm");
+    const emailInput = $("email");
+    const passwordInput = $("password");
+    const submitButton = $("submitButton");
+    const message = $("message");
+    const verifyMessage = $("verifyMessage");
+    const verifyEmail = $("verifyEmail");
+    const accountEmail = $("accountEmail");
+
+    const loginTab = $("loginTab");
+    const registerTab = $("registerTab");
+    const resendButton = $("resendButton");
+    const checkButton = $("checkButton");
+    const verifyLogoutButton = $("verifyLogoutButton");
+    const logoutButton = $("logoutButton");
 
     let mode = "login";
     let busy = false;
+    let screenUser = null;
 
-    function showMessage(text, type = "error") {
-      message.textContent = text;
-      message.className = "message " + type;
+    function showMessage(element, text, type = "error") {
+      element.textContent = text;
+      element.className = "message " + type;
     }
 
     function setMode(newMode) {
@@ -257,35 +328,97 @@
 
       loginTab.classList.toggle("active", !registering);
       registerTab.classList.toggle("active", registering);
-      submitButton.textContent = registering ? "Hesap Oluştur" : "Giriş Yap";
+
+      submitButton.textContent =
+        registering ? "Hesap Oluştur" : "Giriş Yap";
+
       passwordInput.autocomplete =
         registering ? "new-password" : "current-password";
 
-      showMessage("");
+      showMessage(message, "");
+    }
+
+    function showOnly(section) {
+      authSection.classList.toggle("hidden", section !== "auth");
+      verifySection.classList.toggle("hidden", section !== "verify");
+      accountSection.classList.toggle("hidden", section !== "account");
+    }
+
+    function friendlyError(error) {
+      const messages = {
+        "auth/email-already-in-use":
+          "Bu e-posta adresiyle zaten bir hesap var.",
+        "auth/invalid-email":
+          "E-posta adresi geçerli değil.",
+        "auth/weak-password":
+          "Daha güçlü bir şifre belirle. En az 6 karakter kullan.",
+        "auth/invalid-credential":
+          "E-posta veya şifre hatalı.",
+        "auth/user-not-found":
+          "Bu e-posta ile kayıtlı hesap bulunamadı.",
+        "auth/wrong-password":
+          "Şifre hatalı.",
+        "auth/too-many-requests":
+          "Çok fazla deneme yapıldı. Bir süre sonra tekrar dene.",
+        "auth/network-request-failed":
+          "İnternet bağlantını kontrol et.",
+        "auth/operation-not-allowed":
+          "Firebase'de Email/Password girişini etkinleştir.",
+        "auth/unauthorized-domain":
+          "GitHub Pages alan adını Firebase Authorized domains bölümüne ekle.",
+        "auth/invalid-action-code":
+          "Doğrulama bağlantısı geçersiz veya süresi dolmuş.",
+        "auth/expired-action-code":
+          "Doğrulama bağlantısının süresi dolmuş. Yeni bağlantı iste."
+      };
+
+      return messages[error.code] ||
+        "İşlem başarısız oldu. (" +
+        (error.code || "bilinmeyen hata") + ")";
+    }
+
+    function showVerify(user, text) {
+      screenUser = user;
+      showOnly("verify");
+      verifyEmail.textContent = user.email || "";
+
+      showMessage(
+        verifyMessage,
+        text || "E-postandaki doğrulama bağlantısına tıkla.",
+        "success"
+      );
+    }
+
+    async function refreshUserScreen(user) {
+      if (!user) {
+        screenUser = null;
+        showOnly("auth");
+        setMode("login");
+        return;
+      }
+
+      try {
+        await reload(user);
+      } catch (error) {
+        showOnly("auth");
+        showMessage(message, friendlyError(error));
+        return;
+      }
+
+      if (user.emailVerified) {
+        screenUser = user;
+        showOnly("account");
+        accountEmail.textContent = user.email || "";
+      } else {
+        showVerify(
+          user,
+          "Hesabın oluşturuldu ancak e-posta adresin henüz doğrulanmadı."
+        );
+      }
     }
 
     loginTab.addEventListener("click", () => setMode("login"));
     registerTab.addEventListener("click", () => setMode("register"));
-
-    function friendlyError(error) {
-      const messages = {
-        "auth/email-already-in-use": "Bu e-posta adresiyle zaten hesap var.",
-        "auth/invalid-email": "E-posta adresi geçerli değil.",
-        "auth/weak-password": "Daha güçlü bir şifre belirle.",
-        "auth/invalid-credential": "E-posta veya şifre hatalı.",
-        "auth/user-not-found": "Bu e-posta ile kayıtlı hesap bulunamadı.",
-        "auth/wrong-password": "Şifre hatalı.",
-        "auth/too-many-requests": "Çok fazla deneme yapıldı. Bir süre sonra tekrar dene.",
-        "auth/network-request-failed": "İnternet bağlantını kontrol et.",
-        "auth/operation-not-allowed": "Firebase'de Email/Password girişini kontrol et.",
-        "auth/unauthorized-domain": "GitHub Pages alan adını Firebase Authorized domains bölümüne ekle.",
-        "auth/configuration-not-found": "Firebase Authentication ayarlarını kontrol et."
-      };
-
-      return messages[error.code] ||
-        "İşlem başarısız oldu. Firebase ayarlarını kontrol et. (" +
-        (error.code || "bilinmeyen hata") + ")";
-    }
 
     authForm.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -296,49 +429,144 @@
 
       busy = true;
       submitButton.disabled = true;
-      showMessage(mode === "register" ? "Hesap oluşturuluyor..." : "Giriş yapılıyor...", "success");
 
       try {
         if (mode === "register") {
-          await createUserWithEmailAndPassword(auth, email, password);
+          showMessage(
+            message,
+            "Hesabın oluşturuluyor...",
+            "success"
+          );
+
+          const credential = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+          // Firebase doğrulama bağlantısı gönderir.
+          await sendEmailVerification(credential.user);
+
+          showVerify(
+            credential.user,
+            "Doğrulama bağlantısı gönderildi. Gelen kutunu ve spam klasörünü kontrol et."
+          );
         } else {
-          await signInWithEmailAndPassword(auth, email, password);
+          showMessage(message, "Giriş yapılıyor...", "success");
+
+          const credential = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+          await refreshUserScreen(credential.user);
         }
       } catch (error) {
-        showMessage(friendlyError(error));
+        showOnly("auth");
+        showMessage(message, friendlyError(error));
       } finally {
         busy = false;
         submitButton.disabled = false;
       }
     });
 
-    logoutButton.addEventListener("click", async () => {
-      logoutButton.disabled = true;
-      accountMessage.textContent = "";
+    // Doğrulama e-postasını tekrar gönder.
+    resendButton.addEventListener("click", async () => {
+      const user = auth.currentUser;
+
+      if (!user) {
+        showOnly("auth");
+        showMessage(
+          message,
+          "Tekrar giriş yapman gerekiyor.",
+          "error"
+        );
+        return;
+      }
+
+      resendButton.disabled = true;
 
       try {
-        await signOut(auth);
+        await reload(user);
+
+        if (user.emailVerified) {
+          await refreshUserScreen(user);
+          return;
+        }
+
+        await sendEmailVerification(user);
+
+        showMessage(
+          verifyMessage,
+          "Yeni doğrulama bağlantısı gönderildi. Spam klasörünü de kontrol et.",
+          "success"
+        );
       } catch (error) {
-        accountMessage.textContent = "Çıkış yapılamadı. Tekrar dene.";
+        showMessage(verifyMessage, friendlyError(error));
       } finally {
-        logoutButton.disabled = false;
+        resendButton.disabled = false;
       }
     });
 
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        authSection.classList.add("hidden");
-        accountSection.classList.remove("hidden");
-        accountEmail.textContent = user.email || "";
-      } else {
-        accountSection.classList.add("hidden");
-        authSection.classList.remove("hidden");
+    // E-posta bağlantısına tıkladıktan sonra durumu kontrol et.
+    checkButton.addEventListener("click", async () => {
+      const user = auth.currentUser;
+
+      if (!user) {
+        showOnly("auth");
+        showMessage(
+          message,
+          "Lütfen tekrar giriş yap.",
+          "error"
+        );
+        return;
+      }
+
+      checkButton.disabled = true;
+
+      try {
+        await reload(user);
+
+        if (user.emailVerified) {
+          await refreshUserScreen(user);
+          showMessage(
+            $("accountMessage"),
+            "E-posta başarıyla doğrulandı!",
+            "success"
+          );
+        } else {
+          showMessage(
+            verifyMessage,
+            "Henüz doğrulama görünmüyor. E-postandaki bağlantıya tıkla ve tekrar dene.",
+            "error"
+          );
+        }
+      } catch (error) {
+        showMessage(verifyMessage, friendlyError(error));
+      } finally {
+        checkButton.disabled = false;
+      }
+    });
+
+    async function logout() {
+      try {
+        await signOut(auth);
         emailInput.value = "";
         passwordInput.value = "";
-        setMode("login");
+        showMessage(message, "Çıkış yapıldı.", "success");
+      } catch (error) {
+        showMessage(message, friendlyError(error));
       }
+    }
+
+    logoutButton.addEventListener("click", logout);
+    verifyLogoutButton.addEventListener("click", logout);
+
+    onAuthStateChanged(auth, async (user) => {
+      // Giriş yapan kullanıcı doğrulanmadıysa hesap ekranını gösterme.
+      await refreshUserScreen(user);
     });
   </script>
 </body>
 </html>
-```
