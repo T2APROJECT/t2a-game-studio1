@@ -4,211 +4,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>T2A GAME STUDİO | Hesap</title>
-
+  <title>T2A GAME STUDİO | Giriş ve Kayıt</title>
+  <meta name="description" content="T2A GAME STUDİO hesabını oluştur, oyunları keşfet ve oyun mağazasına katıl.">
+  <meta name="robots" content="index,follow">
   <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-      color: #e8edf7;
-      background:
-        radial-gradient(ellipse at top, #203a57 0%, transparent 55%),
-        #0b1018;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 430px;
-      padding: 32px;
-      border: 1px solid #34445b;
-      border-radius: 18px;
-      background: rgba(19, 28, 42, .96);
-      box-shadow: 0 20px 70px #0008;
-    }
-
-    .logo {
-      margin: 0 0 10px;
-      text-align: center;
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: -1px;
-    }
-
-    .logo span { color: #56a0ff; }
-
-    .subtitle {
-      margin: 0 0 26px;
-      color: #a9b7ca;
-      text-align: center;
-      line-height: 1.5;
-    }
-
-    .tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 22px;
-    }
-
-    button, input { font: inherit; }
-
-    button {
-      transition: background .2s, opacity .2s;
-    }
-
-    button:disabled {
-      opacity: .6;
-      cursor: wait;
-    }
-
-    .tab, .submit, .secondary {
-      padding: 12px;
-      border: 0;
-      border-radius: 9px;
-      cursor: pointer;
-    }
-
-    .tab {
-      color: #bdc8d8;
-      background: #202c3d;
-    }
-
-    .tab.active {
-      color: white;
-      background: #276fd0;
-    }
-
-    label {
-      display: block;
-      margin: 15px 0 8px;
-      color: #d6dfeb;
-      font-size: 14px;
-    }
-
-    input {
-      width: 100%;
-      padding: 13px;
-      color: white;
-      background: #0d1521;
-      border: 1px solid #394960;
-      border-radius: 9px;
-      outline: none;
-    }
-
-    input:focus { border-color: #56a0ff; }
-
-    .submit, .secondary {
-      width: 100%;
-      margin-top: 16px;
-      color: white;
-      font-weight: bold;
-    }
-
-    .submit { background: #2878e7; }
-    .secondary { background: #34445a; }
-
-    .message {
-      margin-top: 16px;
-      font-size: 14px;
-      line-height: 1.6;
-      overflow-wrap: anywhere;
-    }
-
-    .message.error { color: #ff8e96; }
-    .message.success { color: #7ce4ac; }
-
-    .hidden { display: none !important; }
-    .account { text-align: center; }
-
-    .avatar {
-      display: grid;
-      place-items: center;
-      width: 76px;
-      height: 76px;
-      margin: 20px auto;
-      border-radius: 50%;
-      background: #233d5c;
-      color: #83baff;
-      font-size: 32px;
-    }
-
-    .email {
-      overflow-wrap: anywhere;
-      color: #9fbedf;
-    }
-
-    .note {
-      margin-top: 22px;
-      color: #8292a8;
-      font-size: 12px;
-      line-height: 1.5;
-      text-align: center;
-    }
-
-    .verify-icon {
-      font-size: 48px;
-      text-align: center;
-      margin: 10px 0 18px;
-    }
-
-    h2 { text-align: center; }
-    .center { text-align: center; }
-
-    @media (max-width: 420px) {
-      .container { padding: 24px 20px; }
-      .logo { font-size: 25px; }
-    }
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;display:grid;place-items:center;padding:20px;font-family:Arial,sans-serif;color:#e8edf7;background:radial-gradient(ellipse at top,#203a57 0%,transparent 55%),#0b1018}
+    .container{width:100%;max-width:450px;padding:30px;border:1px solid #34445b;border-radius:18px;background:rgba(19,28,42,.97);box-shadow:0 20px 70px #0008}
+    .logo{text-align:center;font-size:28px;font-weight:900;letter-spacing:-1px;margin:0 0 10px}
+    .logo span{color:#56a0ff}
+    .subtitle{text-align:center;color:#a9b7ca;line-height:1.5;margin:0 0 24px}
+    .tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+    button,input{font:inherit}
+    button{cursor:pointer;transition:opacity .2s}
+    button:disabled{opacity:.6;cursor:wait}
+    .tab,.submit,.secondary{padding:12px;border:0;border-radius:9px}
+    .tab{color:#bdc8d8;background:#202c3d}
+    .tab.active{color:white;background:#276fd0}
+    label{display:block;margin:13px 0 7px;color:#d6dfeb;font-size:14px}
+    input{width:100%;padding:12px;color:white;background:#0d1521;border:1px solid #394960;border-radius:9px;outline:none}
+    input:focus{border-color:#56a0ff}
+    .submit,.secondary{width:100%;margin-top:16px;color:white;font-weight:bold}
+    .submit{background:#2878e7}
+    .secondary{background:#34445a}
+    .message{margin-top:15px;font-size:14px;line-height:1.6;overflow-wrap:anywhere}
+    .message.error{color:#ff8e96}
+    .message.success{color:#7ce4ac}
+    .hidden{display:none!important}
+    .center{text-align:center}
+    .avatar{display:grid;place-items:center;width:76px;height:76px;margin:20px auto;border-radius:50%;background:#233d5c;color:#83baff;font-size:32px}
+    .email{overflow-wrap:anywhere;color:#9fbedf}
+    .note{margin-top:22px;color:#8292a8;font-size:12px;line-height:1.5;text-align:center}
+    .verify-icon{text-align:center;font-size:48px;margin:10px 0 18px}
+    h2{text-align:center}
+    @media(max-width:420px){.container{padding:24px 20px}.logo{font-size:25px}}
   </style>
 </head>
-
 <body>
   <main class="container">
     <h1 class="logo">T2A GAME <span>STUDİO</span></h1>
     <p class="subtitle">Oyun dünyasına katıl.</p>
 
-    <div id="loadingMessage" class="message success center">
-      Hesap durumu kontrol ediliyor...
-    </div>
+    <div id="loading" class="message success center">Hesap durumu kontrol ediliyor...</div>
 
     <section id="authSection" class="hidden">
       <div class="tabs">
-        <button id="loginTab" class="tab active" type="button">
-          Giriş Yap
-        </button>
-        <button id="registerTab" class="tab" type="button">
-          Kayıt Ol
-        </button>
+        <button id="loginTab" class="tab active" type="button">Giriş Yap</button>
+        <button id="registerTab" class="tab" type="button">Kayıt Ol</button>
       </div>
 
       <form id="authForm">
+        <div id="profileFields" class="hidden">
+          <label for="firstName">Adın</label>
+          <input id="firstName" type="text" autocomplete="given-name" maxlength="40" placeholder="Adın">
+
+          <label for="lastName">Soyadın</label>
+          <input id="lastName" type="text" autocomplete="family-name" maxlength="40" placeholder="Soyadın">
+
+          <label for="nickname">Oyuncu adın (nick)</label>
+          <input id="nickname" type="text" autocomplete="nickname" minlength="3" maxlength="20" placeholder="Örn. T2APlayer">
+        </div>
+
         <label for="email">E-posta adresi</label>
-        <input
-          id="email"
-          type="email"
-          autocomplete="email"
-          placeholder="ornek@email.com"
-          required
-        >
+        <input id="email" type="email" autocomplete="email" placeholder="ornek@email.com" required>
 
         <label for="password">Şifre (en az 6 karakter)</label>
-        <input
-          id="password"
-          type="password"
-          autocomplete="current-password"
-          minlength="6"
-          placeholder="Şifren"
-          required
-        >
+        <input id="password" type="password" autocomplete="current-password" minlength="6" placeholder="Şifren" required>
 
-        <button id="submitButton" class="submit" type="submit">
-          Giriş Yap
-        </button>
+        <button id="submitButton" class="submit" type="submit">Giriş Yap</button>
       </form>
 
       <div id="message" class="message" role="status" aria-live="polite"></div>
@@ -217,68 +80,33 @@
     <section id="verifySection" class="hidden">
       <div class="verify-icon">✉️</div>
       <h2>E-postanı doğrula</h2>
-
-      <p class="subtitle">
-        Hesabını kullanabilmek için e-posta adresine gönderilen
-        doğrulama bağlantısına tıkla.
-      </p>
-
+      <p class="subtitle">Hesabını kullanabilmek için e-postana gönderilen doğrulama bağlantısına tıkla.</p>
       <p id="verifyEmail" class="email center"></p>
-
-      <div id="verifyMessage" class="message" role="status" aria-live="polite">
-        Gelen kutunu ve spam klasörünü kontrol et.
-      </div>
-
-      <button id="resendButton" class="submit" type="button">
-        Doğrulama e-postasını tekrar gönder
-      </button>
-
-      <button id="checkButton" class="secondary" type="button">
-        Doğrulamayı kontrol et
-      </button>
-
-      <button id="verifyLogoutButton" class="secondary" type="button">
-        Çıkış yap
-      </button>
+      <div id="verifyMessage" class="message" role="status" aria-live="polite">Gelen kutunu ve spam klasörünü kontrol et.</div>
+      <button id="resendButton" class="submit" type="button">Doğrulama e-postasını tekrar gönder</button>
+      <button id="checkButton" class="secondary" type="button">Doğrulamayı kontrol et</button>
+      <button id="verifyLogoutButton" class="secondary" type="button">Çıkış yap</button>
     </section>
 
-    <section id="accountSection" class="account hidden">
+    <section id="accountSection" class="hidden center">
       <div class="avatar">✓</div>
       <h2>Hoş geldin!</h2>
-      <p>E-posta adresin doğrulandı.</p>
+      <p id="welcomeName"></p>
       <p id="accountEmail" class="email"></p>
-
-      <button id="openStoreButton" class="submit" type="button">
-        Oyun mağazasına git
-      </button>
-
-      <button id="logoutButton" class="secondary" type="button">
-        Çıkış Yap
-      </button>
-
+      <button id="openStoreButton" class="submit" type="button">Oyun mağazasına git</button>
+      <button id="logoutButton" class="secondary" type="button">Çıkış yap</button>
       <div id="accountMessage" class="message" role="status" aria-live="polite"></div>
     </section>
 
-    <p class="note">
-      Hesap işlemleri Firebase Authentication ile yönetilir.
-      Şifren bu sayfada saklanmaz.
-    </p>
+    <p class="note">Hesap işlemleri Firebase Authentication ile yönetilir.</p>
   </main>
 
   <script type="module">
-    import { initializeApp } from
-      "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
     import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      signInWithEmailAndPassword,
-      onAuthStateChanged,
-      signOut,
-      sendEmailVerification,
-      reload
-    } from
-      "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+      getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+      onAuthStateChanged, signOut, sendEmailVerification, reload, updateProfile
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAl1iMlEFRSFAoFP_nWL1lGjeVuoqY8F8g",
@@ -293,95 +121,73 @@
     const auth = getAuth(app);
     const $ = id => document.getElementById(id);
 
-    const loadingMessage = $("loadingMessage");
     const authSection = $("authSection");
     const verifySection = $("verifySection");
     const accountSection = $("accountSection");
+    const profileFields = $("profileFields");
     const authForm = $("authForm");
-    const emailInput = $("email");
-    const passwordInput = $("password");
-    const submitButton = $("submitButton");
     const message = $("message");
     const verifyMessage = $("verifyMessage");
-    const verifyEmail = $("verifyEmail");
-    const accountEmail = $("accountEmail");
-
-    const loginTab = $("loginTab");
-    const registerTab = $("registerTab");
-    const resendButton = $("resendButton");
-    const checkButton = $("checkButton");
-    const verifyLogoutButton = $("verifyLogoutButton");
-    const logoutButton = $("logoutButton");
-    const openStoreButton = $("openStoreButton");
+    const submitButton = $("submitButton");
 
     let mode = "login";
     let busy = false;
-    let screenUser = null;
     let authInitialized = false;
-    let redirecting = false;
     let screenCheckInProgress = false;
 
-    function showMessage(element, text, type = "error") {
+    function say(element, text, type = "error") {
       element.textContent = text;
       element.className = "message " + type;
     }
 
-    function setMode(newMode) {
-      mode = newMode;
-      const registering = mode === "register";
-
-      loginTab.classList.toggle("active", !registering);
-      registerTab.classList.toggle("active", registering);
-      submitButton.textContent = registering ? "Hesap Oluştur" : "Giriş Yap";
-      passwordInput.autocomplete = registering ? "new-password" : "current-password";
-      showMessage(message, "");
-    }
-
     function showOnly(section) {
-      loadingMessage.classList.add("hidden");
+      $("loading").classList.add("hidden");
       authSection.classList.toggle("hidden", section !== "auth");
       verifySection.classList.toggle("hidden", section !== "verify");
       accountSection.classList.toggle("hidden", section !== "account");
     }
 
+    function setMode(newMode) {
+      mode = newMode;
+      const registering = mode === "register";
+      $("loginTab").classList.toggle("active", !registering);
+      $("registerTab").classList.toggle("active", registering);
+      profileFields.classList.toggle("hidden", !registering);
+
+      ["firstName", "lastName", "nickname"].forEach(id => {
+        $(id).required = registering;
+      });
+
+      $("password").autocomplete = registering ? "new-password" : "current-password";
+      submitButton.textContent = registering ? "Hesap Oluştur" : "Giriş Yap";
+      say(message, "");
+    }
+
     function friendlyError(error) {
-      const messages = {
-        "auth/email-already-in-use": "Bu e-posta adresiyle zaten bir hesap var.",
+      const errors = {
+        "auth/email-already-in-use": "Bu e-posta adresiyle zaten hesap var.",
         "auth/invalid-email": "E-posta adresi geçerli değil.",
-        "auth/weak-password": "En az 6 karakterli daha güçlü bir şifre belirle.",
+        "auth/weak-password": "En az 6 karakterli bir şifre belirle.",
         "auth/invalid-credential": "E-posta veya şifre hatalı.",
-        "auth/user-not-found": "Bu e-posta ile kayıtlı hesap bulunamadı.",
-        "auth/wrong-password": "Şifre hatalı.",
-        "auth/too-many-requests": "Çok fazla deneme yapıldı. Bir süre sonra tekrar dene.",
+        "auth/too-many-requests": "Çok fazla deneme yapıldı. Biraz sonra tekrar dene.",
         "auth/network-request-failed": "İnternet bağlantını kontrol et.",
         "auth/operation-not-allowed": "Firebase'de Email/Password girişini etkinleştir.",
-        "auth/unauthorized-domain": "GitHub Pages alan adını Firebase Authorized domains bölümüne ekle.",
-        "auth/invalid-action-code": "Doğrulama bağlantısı geçersiz veya süresi dolmuş.",
-        "auth/expired-action-code": "Doğrulama bağlantısının süresi dolmuş. Yeni bağlantı iste."
+        "auth/unauthorized-domain": "GitHub Pages alan adını Firebase Authorized domains bölümüne ekle."
       };
-
-      return messages[error.code] ||
-        "İşlem başarısız oldu. (" + (error.code || "bilinmeyen hata") + ")";
+      return errors[error.code] || "İşlem başarısız oldu: " + (error.code || error.message || "Bilinmeyen hata");
     }
 
     function showVerify(user, text) {
-      screenUser = user;
       showOnly("verify");
-      verifyEmail.textContent = user.email || "";
-      showMessage(
-        verifyMessage,
-        text || "E-postandaki doğrulama bağlantısına tıkla.",
-        "success"
-      );
+      $("verifyEmail").textContent = user.email || "";
+      say(verifyMessage, text, "success");
     }
 
-    async function refreshUserScreen(user) {
+    async function refreshScreen(user) {
       if (screenCheckInProgress) return;
       screenCheckInProgress = true;
-
       try {
         if (!user) {
-          screenUser = null;
           showOnly("auth");
           setMode("login");
           return;
@@ -389,181 +195,151 @@
 
         await reload(user);
 
-        if (user.emailVerified) {
-          screenUser = user;
-          showOnly("account");
-          accountEmail.textContent = user.email || "";
-        } else {
-          showVerify(
-            user,
-            "Doğrulama bağlantısı gönderildi. E-postanı ve spam klasörünü kontrol et."
-          );
+        if (!user.emailVerified) {
+          showVerify(user, "E-postandaki doğrulama bağlantısına tıkla.");
+          return;
         }
+
+        showOnly("account");
+        $("accountEmail").textContent = user.email || "";
+
+        const storedNickname = localStorage.getItem("t2a_nick_" + user.uid);
+        const displayName = user.displayName || "";
+        $("welcomeName").textContent =
+          "Merhaba, " + (storedNickname || displayName || "Oyuncu") + "!";
+
       } catch (error) {
-        console.error("Hesap kontrol hatası:", error);
+        console.error(error);
         showOnly("auth");
-        showMessage(message, friendlyError(error));
+        say(message, friendlyError(error));
       } finally {
         screenCheckInProgress = false;
       }
     }
 
-    loginTab.addEventListener("click", () => setMode("login"));
-    registerTab.addEventListener("click", () => setMode("register"));
+    $("loginTab").addEventListener("click", () => setMode("login"));
+    $("registerTab").addEventListener("click", () => setMode("register"));
 
     authForm.addEventListener("submit", async event => {
       event.preventDefault();
       if (busy) return;
 
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
-
       busy = true;
       submitButton.disabled = true;
 
+      const email = $("email").value.trim();
+      const password = $("password").value;
+
       try {
         if (mode === "register") {
-          showMessage(message, "Hesabın oluşturuluyor...", "success");
+          const firstName = $("firstName").value.trim();
+          const lastName = $("lastName").value.trim();
+          const nickname = $("nickname").value.trim();
 
-          const credential = await createUserWithEmailAndPassword(
-            auth, email, password
-          );
+          if (!firstName || !lastName || nickname.length < 3) {
+            throw new Error("Ad, soyad ve en az 3 karakterli oyuncu adı gir.");
+          }
+
+          say(message, "Hesabın oluşturuluyor...", "success");
+          const credential = await createUserWithEmailAndPassword(auth, email, password);
+
+          // Firebase profilinde ad ve soyad tutulur.
+          await updateProfile(credential.user, {
+            displayName: firstName + " " + lastName
+          });
+
+          // Nick, aynı tarayıcıda hesapla ilişkilendirilir.
+          localStorage.setItem("t2a_nick_" + credential.user.uid, nickname);
 
           try {
             await sendEmailVerification(credential.user);
-            showVerify(
-              credential.user,
-              "Doğrulama bağlantısı gönderildi. Gelen kutunu ve spam klasörünü kontrol et."
-            );
+            showVerify(credential.user, "Doğrulama e-postası gönderildi. Gelen kutunu ve spam klasörünü kontrol et.");
           } catch (error) {
-            showVerify(
-              credential.user,
-              "Hesap oluşturuldu fakat e-posta gönderilemedi. Tekrar gönder düğmesini kullan. " +
-              friendlyError(error)
-            );
+            showVerify(credential.user, "Hesap açıldı ancak doğrulama e-postası gönderilemedi. Tekrar gönder düğmesini dene.");
           }
         } else {
-          showMessage(message, "Giriş yapılıyor...", "success");
-
-          const credential = await signInWithEmailAndPassword(
-            auth, email, password
-          );
-
-          await refreshUserScreen(credential.user);
+          say(message, "Giriş yapılıyor...", "success");
+          const credential = await signInWithEmailAndPassword(auth, email, password);
+          await refreshScreen(credential.user);
         }
       } catch (error) {
         showOnly("auth");
-        showMessage(message, friendlyError(error));
+        say(message, error.message && !error.code ? error.message : friendlyError(error));
       } finally {
         busy = false;
         submitButton.disabled = false;
       }
     });
 
-    resendButton.addEventListener("click", async () => {
+    $("resendButton").addEventListener("click", async () => {
       const user = auth.currentUser;
-
-      if (!user) {
-        showOnly("auth");
-        showMessage(message, "Tekrar giriş yapman gerekiyor.");
-        return;
-      }
-
-      resendButton.disabled = true;
-
+      if (!user) return;
+      const button = $("resendButton");
+      button.disabled = true;
       try {
         await reload(user);
-
         if (user.emailVerified) {
-          await refreshUserScreen(user);
+          await refreshScreen(user);
           return;
         }
-
         await sendEmailVerification(user);
-        showMessage(
-          verifyMessage,
-          "Yeni doğrulama bağlantısı gönderildi. Spam klasörünü de kontrol et.",
-          "success"
-        );
+        say(verifyMessage, "Yeni doğrulama e-postası gönderildi.", "success");
       } catch (error) {
-        showMessage(verifyMessage, friendlyError(error));
+        say(verifyMessage, friendlyError(error));
       } finally {
-        resendButton.disabled = false;
+        button.disabled = false;
       }
     });
 
-    checkButton.addEventListener("click", async () => {
+    $("checkButton").addEventListener("click", async () => {
       const user = auth.currentUser;
-
-      if (!user) {
-        showOnly("auth");
-        showMessage(message, "Lütfen tekrar giriş yap.");
-        return;
-      }
-
-      checkButton.disabled = true;
-
+      if (!user) return;
+      const button = $("checkButton");
+      button.disabled = true;
       try {
         await reload(user);
-
         if (user.emailVerified) {
-          await refreshUserScreen(user);
-          showMessage(
-            $("accountMessage"),
-            "E-posta başarıyla doğrulandı!",
-            "success"
-          );
+          await refreshScreen(user);
+          say($("accountMessage"), "E-posta doğrulandı!", "success");
         } else {
-          showMessage(
-            verifyMessage,
-            "Henüz doğrulama görünmüyor. E-postandaki bağlantıya tıkla ve tekrar dene."
-          );
+          say(verifyMessage, "Doğrulama henüz görünmüyor. E-postadaki bağlantıya tıkla ve tekrar dene.");
         }
       } catch (error) {
-        showMessage(verifyMessage, friendlyError(error));
+        say(verifyMessage, friendlyError(error));
       } finally {
-        checkButton.disabled = false;
+        button.disabled = false;
       }
     });
 
     async function logout() {
       try {
         await signOut(auth);
-        screenUser = null;
         showOnly("auth");
         setMode("login");
-        showMessage(message, "Çıkış yapıldı.", "success");
+        say(message, "Çıkış yapıldı.", "success");
       } catch (error) {
-        showMessage(message, friendlyError(error));
+        say(message, friendlyError(error));
       }
     }
 
-    logoutButton.addEventListener("click", logout);
-    verifyLogoutButton.addEventListener("click", logout);
+    $("logoutButton").addEventListener("click", logout);
+    $("verifyLogoutButton").addEventListener("click", logout);
 
-    openStoreButton.addEventListener("click", () => {
-      if (redirecting) return;
-      redirecting = true;
-      openStoreButton.disabled = true;
+    $("openStoreButton").addEventListener("click", () => {
       window.location.href = "./store.html";
     });
 
-    // İlk oturum kontrolü tamamlanmadan ekran yönlendirmesi yapılmaz.
     onAuthStateChanged(auth, async user => {
       if (!authInitialized) {
         authInitialized = true;
-        loadingMessage.classList.add("hidden");
+        $("loading").classList.add("hidden");
       }
-
-      // Kullanıcı giriş/kayıt işlemi sırasında ekranı değiştirme.
-      if (busy) return;
-
-      await refreshUserScreen(user);
+      if (!busy) await refreshScreen(user);
     }, error => {
-      console.error("Firebase oturum hatası:", error);
-      loadingMessage.classList.add("hidden");
+      console.error(error);
+      $("loading").classList.add("hidden");
       showOnly("auth");
-      showMessage(message, friendlyError(error));
+      say(message, friendlyError(error));
     });
   </script>
 </body>
