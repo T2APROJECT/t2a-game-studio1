@@ -4,449 +4,266 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>T2A GAME STUDİO | Oyun Mağazası</title>
-  <meta name="description" content="T2A GAME STUDİO oyun mağazası. Popüler PC oyunlarını keşfet.">
-  <style>
-    :root {
-      --bg: #101216;
-      --panel: #191d24;
-      --panel2: #222833;
-      --text: #f1f5f9;
-      --muted: #9aa6b7;
-      --green: #72e6a2;
-      --green-dark: #183d2b;
-      --border: #2c3440;
-    }
+  <title>T2A GAME STUDİO | Hesap</title>
 
+  <style>
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      color: #e8edf7;
+      background:
+        radial-gradient(ellipse at top, #203a57 0%, transparent 55%),
+        #0b1018;
     }
 
-    button, input, select { font: inherit; }
-    a { color: inherit; text-decoration: none; }
-
-    .topbar {
-      min-height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 14px 5%;
-      background: #171a20;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 10;
+    .container {
+      width: 100%;
+      max-width: 430px;
+      padding: 32px;
+      border: 1px solid #34445b;
+      border-radius: 18px;
+      background: rgba(19, 28, 42, .96);
+      box-shadow: 0 20px 70px #0008;
     }
 
     .logo {
-      font-size: 21px;
+      margin: 0 0 10px;
+      text-align: center;
+      font-size: 28px;
       font-weight: 900;
-      letter-spacing: .4px;
-      white-space: nowrap;
+      letter-spacing: -1px;
     }
 
-    .logo span { color: var(--green); }
+    .logo span { color: #56a0ff; }
 
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      color: #c6ced9;
-      font-size: 14px;
+    .subtitle {
+      margin: 0 0 26px;
+      color: #a9b7ca;
+      text-align: center;
+      line-height: 1.5;
     }
 
-    .nav a:hover { color: var(--green); }
-
-    .user-area {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 13px;
-      color: var(--muted);
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 22px;
     }
 
-    .logout {
-      border: 1px solid #46515f;
-      color: white;
-      background: #252b35;
-      padding: 9px 13px;
-      border-radius: 7px;
-      cursor: pointer;
+    button, input { font: inherit; }
+
+    button {
+      transition: background .2s, opacity .2s;
     }
 
-    .logout:hover { background: #343d49; }
-
-    .hero {
-      margin: 28px auto;
-      width: 90%;
-      max-width: 1400px;
-      min-height: 300px;
-      border-radius: 16px;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      padding: clamp(24px, 5vw, 64px);
-      background:
-        linear-gradient(90deg, rgba(10,13,18,.98), rgba(10,13,18,.78) 48%, rgba(10,13,18,.12)),
-        url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1800&q=85")
-        center/cover;
-      border: 1px solid #303844;
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
     }
 
-    .hero-content { max-width: 570px; }
-
-    .eyebrow {
-      color: var(--green);
-      text-transform: uppercase;
-      font-size: 12px;
-      font-weight: bold;
-      letter-spacing: 2px;
-    }
-
-    .hero h1 {
-      font-size: clamp(32px, 5vw, 56px);
-      line-height: 1.05;
-      margin: 14px 0;
-    }
-
-    .hero p {
-      color: #c2cbd7;
-      line-height: 1.7;
-      max-width: 500px;
-    }
-
-    .primary-btn {
-      display: inline-block;
+    .tab, .submit, .secondary {
+      padding: 12px;
       border: 0;
-      border-radius: 7px;
-      background: var(--green);
-      color: #102017;
-      font-weight: bold;
-      padding: 12px 18px;
+      border-radius: 9px;
       cursor: pointer;
-      margin-top: 10px;
     }
 
-    .primary-btn:hover { background: #95f4b9; }
-
-    main {
-      width: 90%;
-      max-width: 1400px;
-      margin: 0 auto 60px;
+    .tab {
+      color: #bdc8d8;
+      background: #202c3d;
     }
 
-    .section-heading {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 16px;
-      margin: 36px 0 18px;
+    .tab.active {
+      color: white;
+      background: #276fd0;
     }
 
-    .section-heading h2 {
-      margin: 0;
-      font-size: 25px;
-    }
-
-    .section-heading p {
-      margin: 8px 0 0;
-      color: var(--muted);
+    label {
+      display: block;
+      margin: 15px 0 8px;
+      color: #d6dfeb;
       font-size: 14px;
     }
 
-    .toolbar {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-
-    .search {
-      flex: 1;
-      min-width: 220px;
-      background: #1b2028;
+    input {
+      width: 100%;
+      padding: 13px;
       color: white;
-      border: 1px solid #343d49;
-      padding: 13px 15px;
-      border-radius: 8px;
+      background: #0d1521;
+      border: 1px solid #394960;
+      border-radius: 9px;
       outline: none;
     }
 
-    .search:focus { border-color: var(--green); }
+    input:focus { border-color: #56a0ff; }
 
-    .filter {
-      min-width: 155px;
-      background: #1b2028;
-      color: white;
-      border: 1px solid #343d49;
-      padding: 12px;
-      border-radius: 8px;
-    }
-
-    .chips {
-      display: flex;
-      gap: 9px;
-      flex-wrap: wrap;
-      margin: 0 0 22px;
-    }
-
-    .chip {
-      background: #202630;
-      border: 1px solid #343d49;
-      color: #d5dce6;
-      padding: 9px 14px;
-      border-radius: 22px;
-      cursor: pointer;
-    }
-
-    .chip:hover, .chip.active {
-      background: var(--green-dark);
-      border-color: var(--green);
-      color: var(--green);
-    }
-
-    .game-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .game-card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      min-width: 0;
-      transition: transform .18s, border-color .18s;
-    }
-
-    .game-card:hover {
-      transform: translateY(-4px);
-      border-color: #52645b;
-    }
-
-    .cover {
-      height: 185px;
-      position: relative;
-      background: #252b35;
-      overflow: hidden;
-    }
-
-    .cover img {
+    .submit, .secondary {
       width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-      transition: transform .25s;
-    }
-
-    .game-card:hover .cover img { transform: scale(1.04); }
-
-    .tag {
-      position: absolute;
-      left: 10px;
-      top: 10px;
-      background: rgba(10, 15, 12, .88);
-      color: var(--green);
-      font-size: 11px;
-      font-weight: bold;
-      padding: 6px 9px;
-      border-radius: 5px;
-    }
-
-    .game-info { padding: 15px; }
-
-    .game-info h3 {
-      font-size: 17px;
-      margin: 0 0 9px;
-    }
-
-    .game-info p {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
-      min-height: 39px;
-      margin: 0 0 14px;
-    }
-
-    .card-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .price { font-weight: bold; font-size: 14px; }
-    .price.free { color: var(--green); }
-
-    .game-link {
-      background: #303946;
+      margin-top: 16px;
       color: white;
-      border-radius: 6px;
-      padding: 9px 11px;
-      font-size: 12px;
       font-weight: bold;
-      white-space: nowrap;
     }
 
-    .game-link:hover {
-      background: var(--green);
-      color: #102017;
-    }
+    .submit { background: #2878e7; }
+    .secondary { background: #34445a; }
 
-    .empty {
-      display: none;
-      text-align: center;
-      padding: 45px 15px;
-      color: var(--muted);
-      background: var(--panel);
-      border-radius: 10px;
-      border: 1px solid var(--border);
-    }
-
-    .notice {
-      background: #18271f;
-      color: #b7f2ce;
-      border: 1px solid #2a5039;
-      padding: 14px 16px;
-      border-radius: 8px;
-      margin: 24px 0;
-      font-size: 13px;
+    .message {
+      margin-top: 16px;
+      font-size: 14px;
       line-height: 1.6;
+      overflow-wrap: anywhere;
     }
 
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 26px 5%;
-      color: var(--muted);
-      font-size: 13px;
+    .message.error { color: #ff8e96; }
+    .message.success { color: #7ce4ac; }
+
+    .hidden { display: none !important; }
+    .account { text-align: center; }
+
+    .avatar {
+      display: grid;
+      place-items: center;
+      width: 76px;
+      height: 76px;
+      margin: 20px auto;
+      border-radius: 50%;
+      background: #233d5c;
+      color: #83baff;
+      font-size: 32px;
+    }
+
+    .email {
+      overflow-wrap: anywhere;
+      color: #9fbedf;
+    }
+
+    .note {
+      margin-top: 22px;
+      color: #8292a8;
+      font-size: 12px;
+      line-height: 1.5;
       text-align: center;
     }
 
-    .loading {
+    .verify-icon {
+      font-size: 48px;
       text-align: center;
-      padding: 80px 20px;
-      color: var(--muted);
+      margin: 10px 0 18px;
     }
 
-    @media (max-width: 1050px) {
-      .game-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .nav { display: none; }
-    }
+    h2 { text-align: center; }
+    .center { text-align: center; }
 
-    @media (max-width: 720px) {
-      .topbar { padding: 13px 4%; }
-      .logo { font-size: 17px; }
-      .user-area { gap: 7px; }
-      #userEmail { max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
-      .hero, main { width: 92%; }
-      .hero { min-height: 280px; }
-      .game-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-      .cover { height: 140px; }
-      .game-info { padding: 11px; }
-      .game-info h3 { font-size: 15px; }
-      .game-info p { font-size: 12px; }
-      .card-bottom { align-items: flex-start; flex-direction: column; }
-      .game-link { width: 100%; text-align: center; }
-      .section-heading h2 { font-size: 21px; }
-    }
-
-    @media (max-width: 380px) {
-      .game-grid { grid-template-columns: 1fr; }
-      .cover { height: 190px; }
+    @media (max-width: 420px) {
+      .container { padding: 24px 20px; }
+      .logo { font-size: 25px; }
     }
   </style>
 </head>
 
 <body>
-  <div id="loading" class="loading">T2A GAME STUDİO yükleniyor...</div>
+  <main class="container">
+    <h1 class="logo">T2A GAME <span>STUDİO</span></h1>
+    <p class="subtitle">Oyun dünyasına katıl.</p>
 
-  <div id="store" hidden>
-    <header class="topbar">
-      <a class="logo" href="store.html">T2A <span>GAME STUDİO</span></a>
+    <div id="loadingMessage" class="message success center">
+      Hesap durumu kontrol ediliyor...
+    </div>
 
-      <nav class="nav">
-        <a href="#games">Mağaza</a>
-        <a href="#free">Ücretsiz Oyunlar</a>
-        <a href="#paid">Ücretli Oyunlar</a>
-      </nav>
-
-      <div class="user-area">
-        <span id="userEmail"></span>
-        <button id="logoutBtn" class="logout">Çıkış yap</button>
+    <section id="authSection" class="hidden">
+      <div class="tabs">
+        <button id="loginTab" class="tab active" type="button">
+          Giriş Yap
+        </button>
+        <button id="registerTab" class="tab" type="button">
+          Kayıt Ol
+        </button>
       </div>
-    </header>
 
-    <section class="hero">
-      <div class="hero-content">
-        <div class="eyebrow">Oyuncuların buluşma noktası</div>
-        <h1>Yeni dünyalar<br>keşfet.</h1>
-        <p>
-          Favori PC oyunlarını keşfet, ücretsiz oyunları bul ve
-          oyunların resmî sayfalarına kolayca ulaş.
-        </p>
-        <a href="#games" class="primary-btn">Oyunları keşfet</a>
-      </div>
+      <form id="authForm">
+        <label for="email">E-posta adresi</label>
+        <input
+          id="email"
+          type="email"
+          autocomplete="email"
+          placeholder="ornek@email.com"
+          required
+        >
+
+        <label for="password">Şifre (en az 6 karakter)</label>
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          minlength="6"
+          placeholder="Şifren"
+          required
+        >
+
+        <button id="submitButton" class="submit" type="submit">
+          Giriş Yap
+        </button>
+      </form>
+
+      <div id="message" class="message" role="status" aria-live="polite"></div>
     </section>
 
-    <main id="games">
-      <div class="section-heading">
-        <div>
-          <h2>Oyun mağazası</h2>
-          <p>Popüler oyunlar, ücretsiz seçenekler ve mağaza bağlantıları.</p>
-        </div>
+    <section id="verifySection" class="hidden">
+      <div class="verify-icon">✉️</div>
+      <h2>E-postanı doğrula</h2>
+
+      <p class="subtitle">
+        Hesabını kullanabilmek için e-posta adresine gönderilen
+        doğrulama bağlantısına tıkla.
+      </p>
+
+      <p id="verifyEmail" class="email center"></p>
+
+      <div id="verifyMessage" class="message" role="status" aria-live="polite">
+        Gelen kutunu ve spam klasörünü kontrol et.
       </div>
 
-      <div class="toolbar">
-        <input
-          id="searchInput"
-          class="search"
-          type="search"
-          placeholder="Oyun ara... (ör. Valorant, CS2)"
-          aria-label="Oyun ara"
-        >
-        <select id="priceFilter" class="filter" aria-label="Fiyat filtresi">
-          <option value="all">Tüm fiyatlar</option>
-          <option value="free">Ücretsiz oyunlar</option>
-          <option value="paid">Ücretli oyunlar</option>
-        </select>
-        <select id="sortFilter" class="filter" aria-label="Sıralama">
-          <option value="featured">Önerilen sıralama</option>
-          <option value="az">İsim: A-Z</option>
-          <option value="za">İsim: Z-A</option>
-        </select>
-      </div>
+      <button id="resendButton" class="submit" type="button">
+        Doğrulama e-postasını tekrar gönder
+      </button>
 
-      <div class="chips" aria-label="Oyun kategorileri">
-        <button class="chip active" data-category="all">Tümü</button>
-        <button class="chip" data-category="shooter">FPS / Aksiyon</button>
-        <button class="chip" data-category="battle">Battle Royale</button>
-        <button class="chip" data-category="casual">Eğlence</button>
-        <button class="chip" data-category="rpg">RPG / Macera</button>
-      </div>
+      <button id="checkButton" class="secondary" type="button">
+        Doğrulamayı kontrol et
+      </button>
 
-      <div id="gameGrid" class="game-grid"></div>
-      <div id="emptyMessage" class="empty">Aramana uygun oyun bulunamadı.</div>
+      <button id="verifyLogoutButton" class="secondary" type="button">
+        Çıkış yap
+      </button>
+    </section>
 
-      <div class="notice">
-        <strong>Bilgilendirme:</strong> T2A GAME STUDİO bağımsız bir oyun
-        keşif sayfasıdır. Oyunlar ilgili yayıncıların veya mağazaların
-        resmî sayfalarından açılır. Ücret ve erişilebilirlik bilgileri
-        zamanla değişebilir; satın almadan önce resmî sayfayı kontrol et.
-      </div>
-    </main>
+    <section id="accountSection" class="account hidden">
+      <div class="avatar">✓</div>
+      <h2>Hoş geldin!</h2>
+      <p>E-posta adresin doğrulandı.</p>
+      <p id="accountEmail" class="email"></p>
 
-    <footer>
-      © 2026 T2A GAME STUDİO — Oyuncular için hazırlandı.
-      Tüm oyun adları ve markalar ilgili sahiplerine aittir.
-    </footer>
-  </div>
+      <button id="openStoreButton" class="submit" type="button">
+        Oyun mağazasına git
+      </button>
+
+      <button id="logoutButton" class="secondary" type="button">
+        Çıkış Yap
+      </button>
+
+      <div id="accountMessage" class="message" role="status" aria-live="polite"></div>
+    </section>
+
+    <p class="note">
+      Hesap işlemleri Firebase Authentication ile yönetilir.
+      Şifren bu sayfada saklanmaz.
+    </p>
+  </main>
 
   <script type="module">
     import { initializeApp } from
@@ -454,13 +271,15 @@
 
     import {
       getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
       onAuthStateChanged,
       signOut,
+      sendEmailVerification,
       reload
-    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+    } from
+      "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-    // Firebase Console > Project settings > Your apps bölümündeki
-    // web uygulaması yapılandırmasıyla aynı olmalı.
     const firebaseConfig = {
       apiKey: "AIzaSyAl1iMlEFRSFAoFP_nWL1lGjeVuoqY8F8g",
       authDomain: "t2a-game-studio.firebaseapp.com",
@@ -472,241 +291,279 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const $ = id => document.getElementById(id);
 
-    const loading = document.getElementById("loading");
-    const store = document.getElementById("store");
-    const userEmail = document.getElementById("userEmail");
-    const logoutBtn = document.getElementById("logoutBtn");
+    const loadingMessage = $("loadingMessage");
+    const authSection = $("authSection");
+    const verifySection = $("verifySection");
+    const accountSection = $("accountSection");
+    const authForm = $("authForm");
+    const emailInput = $("email");
+    const passwordInput = $("password");
+    const submitButton = $("submitButton");
+    const message = $("message");
+    const verifyMessage = $("verifyMessage");
+    const verifyEmail = $("verifyEmail");
+    const accountEmail = $("accountEmail");
 
-    // Fiyatlar yerine resmî mağaza bağlantıları kullanılıyor.
-    // Böylece değişebilen fiyatları yanlış göstermiyoruz.
-    const games = [
-      {
-        name: "VALORANT",
-        category: "shooter",
-        type: "free",
-        label: "ÜCRETSİZ",
-        description: "5'e 5 taktiksel karakter tabanlı nişancı oyunu.",
-        image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
-        url: "https://playvalorant.com/"
-      },
-      {
-        name: "Counter-Strike 2",
-        category: "shooter",
-        type: "free",
-        label: "ÜCRETSİZ",
-        description: "Rekabetçi takım tabanlı FPS deneyimi.",
-        image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80",
-        url: "https://store.steampowered.com/app/730/CounterStrike_2/"
-      },
-      {
-        name: "Fortnite",
-        category: "battle",
-        type: "free",
-        label: "ÜCRETSİZ",
-        description: "Battle Royale, inşa ve farklı oyun modları.",
-        image: "https://images.unsplash.com/photo-1603481546238-487240415921?auto=format&fit=crop&w=800&q=80",
-        url: "https://www.fortnite.com/"
-      },
-      {
-        name: "Roblox",
-        category: "casual",
-        type: "free",
-        label: "ÜCRETSİZ",
-        description: "Oyuncuların oluşturduğu milyonlarca deneyim.",
-        image: "https://images.unsplash.com/photo-1614294149010-950b698f72c0?auto=format&fit=crop&w=800&q=80",
-        url: "https://www.roblox.com/"
-      },
-      {
-        name: "Apex Legends",
-        category: "battle",
-        type: "free",
-        label: "ÜCRETSİZ",
-        description: "Takım çalışması ve kahraman yetenekleriyle savaş.",
-        image: "https://images.unsplash.com/photo-1493711662062-fa541adto3?auto=format&fit=crop&w=800&q=80",
-        url: "https://store.steampowered.com/app/1172470/Apex_Legends/"
-      },
-      {
-        name: "Dota 2",
-        category: "casual",
-        type: "free",
-        label: "ÜCRETSİZ",
-        description: "Derin stratejiye sahip rekabetçi MOBA.",
-        image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80",
-        url: "https://store.steampowered.com/app/570/Dota_2/"
-      },
-      {
-        name: "Warframe",
-        category: "shooter",
-        type: "free",
-        label: "ÜCRETSİZ",
-        description: "Bilim kurgu evreninde hızlı tempolu aksiyon.",
-        image: "https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=800&q=80",
-        url: "https://www.warframe.com/"
-      },
-      {
-        name: "PUBG: BATTLEGROUNDS",
-        category: "battle",
-        type: "free",
-        label: "ÜCRETSİZ",
-        description: "Hayatta kalma odaklı battle royale savaşı.",
-        image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
-        url: "https://store.steampowered.com/app/578080/PUBG_BATTLEGROUNDS/"
-      },
-      {
-        name: "Minecraft",
-        category: "casual",
-        type: "paid",
-        label: "ÜCRETLİ",
-        description: "Bloklarla inşa et, keşfet ve hayatta kal.",
-        image: "https://images.unsplash.com/photo-1607513746994-51f730a44832?auto=format&fit=crop&w=800&q=80",
-        url: "https://www.minecraft.net/"
-      },
-      {
-        name: "Grand Theft Auto V",
-        category: "shooter",
-        type: "paid",
-        label: "ÜCRETLİ",
-        description: "Açık dünyada aksiyon ve hikâye deneyimi.",
-        image: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=800&q=80",
-        url: "https://store.steampowered.com/app/271590/Grand_Theft_Auto_V_Enhanced/"
-      },
-      {
-        name: "Red Dead Redemption 2",
-        category: "rpg",
-        type: "paid",
-        label: "ÜCRETLİ",
-        description: "Vahşi Batı'da geniş kapsamlı açık dünya macerası.",
-        image: "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=800&q=80",
-        url: "https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/"
-      },
-      {
-        name: "Elden Ring",
-        category: "rpg",
-        type: "paid",
-        label: "ÜCRETLİ",
-        description: "Keşif, zorlu savaşlar ve fantastik bir dünya.",
-        image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
-        url: "https://store.steampowered.com/app/1245620/ELDEN_RING/"
-      }
-    ];
+    const loginTab = $("loginTab");
+    const registerTab = $("registerTab");
+    const resendButton = $("resendButton");
+    const checkButton = $("checkButton");
+    const verifyLogoutButton = $("verifyLogoutButton");
+    const logoutButton = $("logoutButton");
+    const openStoreButton = $("openStoreButton");
 
-    let activeCategory = "all";
+    let mode = "login";
+    let busy = false;
+    let screenUser = null;
+    let authInitialized = false;
+    let redirecting = false;
+    let screenCheckInProgress = false;
 
-    function renderGames() {
-      const grid = document.getElementById("gameGrid");
-      const empty = document.getElementById("emptyMessage");
-      const search = document.getElementById("searchInput").value
-        .trim().toLocaleLowerCase("tr");
-      const price = document.getElementById("priceFilter").value;
-      const sort = document.getElementById("sortFilter").value;
-
-      let filtered = games.filter(game => {
-        const matchesSearch =
-          game.name.toLocaleLowerCase("tr").includes(search) ||
-          game.description.toLocaleLowerCase("tr").includes(search);
-
-        const matchesPrice = price === "all" || game.type === price;
-        const matchesCategory =
-          activeCategory === "all" || game.category === activeCategory;
-
-        return matchesSearch && matchesPrice && matchesCategory;
-      });
-
-      if (sort === "az") {
-        filtered.sort((a, b) => a.name.localeCompare(b.name, "tr"));
-      } else if (sort === "za") {
-        filtered.sort((a, b) => b.name.localeCompare(a.name, "tr"));
-      }
-
-      grid.innerHTML = filtered.map(game => `
-        <article class="game-card">
-          <div class="cover">
-            <img
-              src="${game.image}"
-              alt="${game.name} kapak görseli"
-              loading="lazy"
-              onerror="this.style.display='none'"
-            >
-            <span class="tag">${game.label}</span>
-          </div>
-          <div class="game-info">
-            <h3>${game.name}</h3>
-            <p>${game.description}</p>
-            <div class="card-bottom">
-              <span class="price ${game.type === "free" ? "free" : ""}">
-                ${game.type === "free" ? "Ücretsiz" : "Mağaza fiyatı"}
-              </span>
-              <a
-                class="game-link"
-                href="${game.url}"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                ${game.type === "free" ? "Oyunu edin ↗" : "Mağazaya git ↗"}
-              </a>
-            </div>
-          </div>
-        </article>
-      `).join("");
-
-      empty.style.display = filtered.length ? "none" : "block";
+    function showMessage(element, text, type = "error") {
+      element.textContent = text;
+      element.className = "message " + type;
     }
 
-    document.getElementById("searchInput")
-      .addEventListener("input", renderGames);
+    function setMode(newMode) {
+      mode = newMode;
+      const registering = mode === "register";
 
-    document.getElementById("priceFilter")
-      .addEventListener("change", renderGames);
+      loginTab.classList.toggle("active", !registering);
+      registerTab.classList.toggle("active", registering);
+      submitButton.textContent = registering ? "Hesap Oluştur" : "Giriş Yap";
+      passwordInput.autocomplete = registering ? "new-password" : "current-password";
+      showMessage(message, "");
+    }
 
-    document.getElementById("sortFilter")
-      .addEventListener("change", renderGames);
+    function showOnly(section) {
+      loadingMessage.classList.add("hidden");
+      authSection.classList.toggle("hidden", section !== "auth");
+      verifySection.classList.toggle("hidden", section !== "verify");
+      accountSection.classList.toggle("hidden", section !== "account");
+    }
 
-    document.querySelectorAll(".chip").forEach(button => {
-      button.addEventListener("click", () => {
-        document.querySelectorAll(".chip")
-          .forEach(chip => chip.classList.remove("active"));
+    function friendlyError(error) {
+      const messages = {
+        "auth/email-already-in-use": "Bu e-posta adresiyle zaten bir hesap var.",
+        "auth/invalid-email": "E-posta adresi geçerli değil.",
+        "auth/weak-password": "En az 6 karakterli daha güçlü bir şifre belirle.",
+        "auth/invalid-credential": "E-posta veya şifre hatalı.",
+        "auth/user-not-found": "Bu e-posta ile kayıtlı hesap bulunamadı.",
+        "auth/wrong-password": "Şifre hatalı.",
+        "auth/too-many-requests": "Çok fazla deneme yapıldı. Bir süre sonra tekrar dene.",
+        "auth/network-request-failed": "İnternet bağlantını kontrol et.",
+        "auth/operation-not-allowed": "Firebase'de Email/Password girişini etkinleştir.",
+        "auth/unauthorized-domain": "GitHub Pages alan adını Firebase Authorized domains bölümüne ekle.",
+        "auth/invalid-action-code": "Doğrulama bağlantısı geçersiz veya süresi dolmuş.",
+        "auth/expired-action-code": "Doğrulama bağlantısının süresi dolmuş. Yeni bağlantı iste."
+      };
 
-        button.classList.add("active");
-        activeCategory = button.dataset.category;
-        renderGames();
-      });
-    });
+      return messages[error.code] ||
+        "İşlem başarısız oldu. (" + (error.code || "bilinmeyen hata") + ")";
+    }
 
-    logoutBtn.addEventListener("click", async () => {
+    function showVerify(user, text) {
+      screenUser = user;
+      showOnly("verify");
+      verifyEmail.textContent = user.email || "";
+      showMessage(
+        verifyMessage,
+        text || "E-postandaki doğrulama bağlantısına tıkla.",
+        "success"
+      );
+    }
+
+    async function refreshUserScreen(user) {
+      if (screenCheckInProgress) return;
+      screenCheckInProgress = true;
+
       try {
-        await signOut(auth);
-        window.location.replace("index.html");
+        if (!user) {
+          screenUser = null;
+          showOnly("auth");
+          setMode("login");
+          return;
+        }
+
+        await reload(user);
+
+        if (user.emailVerified) {
+          screenUser = user;
+          showOnly("account");
+          accountEmail.textContent = user.email || "";
+        } else {
+          showVerify(
+            user,
+            "Doğrulama bağlantısı gönderildi. E-postanı ve spam klasörünü kontrol et."
+          );
+        }
       } catch (error) {
-        alert("Çıkış yapılamadı: " + error.message);
+        console.error("Hesap kontrol hatası:", error);
+        showOnly("auth");
+        showMessage(message, friendlyError(error));
+      } finally {
+        screenCheckInProgress = false;
+      }
+    }
+
+    loginTab.addEventListener("click", () => setMode("login"));
+    registerTab.addEventListener("click", () => setMode("register"));
+
+    authForm.addEventListener("submit", async event => {
+      event.preventDefault();
+      if (busy) return;
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      busy = true;
+      submitButton.disabled = true;
+
+      try {
+        if (mode === "register") {
+          showMessage(message, "Hesabın oluşturuluyor...", "success");
+
+          const credential = await createUserWithEmailAndPassword(
+            auth, email, password
+          );
+
+          try {
+            await sendEmailVerification(credential.user);
+            showVerify(
+              credential.user,
+              "Doğrulama bağlantısı gönderildi. Gelen kutunu ve spam klasörünü kontrol et."
+            );
+          } catch (error) {
+            showVerify(
+              credential.user,
+              "Hesap oluşturuldu fakat e-posta gönderilemedi. Tekrar gönder düğmesini kullan. " +
+              friendlyError(error)
+            );
+          }
+        } else {
+          showMessage(message, "Giriş yapılıyor...", "success");
+
+          const credential = await signInWithEmailAndPassword(
+            auth, email, password
+          );
+
+          await refreshUserScreen(credential.user);
+        }
+      } catch (error) {
+        showOnly("auth");
+        showMessage(message, friendlyError(error));
+      } finally {
+        busy = false;
+        submitButton.disabled = false;
       }
     });
 
-    // Mağaza yalnızca oturumu açık ve e-postası doğrulanmış
-    // kullanıcıların normal gezinme akışında açılır.
-    onAuthStateChanged(auth, async user => {
+    resendButton.addEventListener("click", async () => {
+      const user = auth.currentUser;
+
       if (!user) {
-        window.location.replace("index.html");
+        showOnly("auth");
+        showMessage(message, "Tekrar giriş yapman gerekiyor.");
         return;
       }
+
+      resendButton.disabled = true;
 
       try {
         await reload(user);
 
-        if (!user.emailVerified) {
-           window.location.replace("store.html");
+        if (user.emailVerified) {
+          await refreshUserScreen(user);
           return;
         }
 
-        userEmail.textContent = user.email || "Oyuncu";
-        loading.hidden = true;
-        store.hidden = false;
-        renderGames();
+        await sendEmailVerification(user);
+        showMessage(
+          verifyMessage,
+          "Yeni doğrulama bağlantısı gönderildi. Spam klasörünü de kontrol et.",
+          "success"
+        );
       } catch (error) {
-        console.error("Oturum kontrol hatası:", error);
-        loading.textContent =
-          "Oturum kontrol edilemedi. Sayfayı yenileyip tekrar dene.";
+        showMessage(verifyMessage, friendlyError(error));
+      } finally {
+        resendButton.disabled = false;
       }
+    });
+
+    checkButton.addEventListener("click", async () => {
+      const user = auth.currentUser;
+
+      if (!user) {
+        showOnly("auth");
+        showMessage(message, "Lütfen tekrar giriş yap.");
+        return;
+      }
+
+      checkButton.disabled = true;
+
+      try {
+        await reload(user);
+
+        if (user.emailVerified) {
+          await refreshUserScreen(user);
+          showMessage(
+            $("accountMessage"),
+            "E-posta başarıyla doğrulandı!",
+            "success"
+          );
+        } else {
+          showMessage(
+            verifyMessage,
+            "Henüz doğrulama görünmüyor. E-postandaki bağlantıya tıkla ve tekrar dene."
+          );
+        }
+      } catch (error) {
+        showMessage(verifyMessage, friendlyError(error));
+      } finally {
+        checkButton.disabled = false;
+      }
+    });
+
+    async function logout() {
+      try {
+        await signOut(auth);
+        screenUser = null;
+        showOnly("auth");
+        setMode("login");
+        showMessage(message, "Çıkış yapıldı.", "success");
+      } catch (error) {
+        showMessage(message, friendlyError(error));
+      }
+    }
+
+    logoutButton.addEventListener("click", logout);
+    verifyLogoutButton.addEventListener("click", logout);
+
+    openStoreButton.addEventListener("click", () => {
+      if (redirecting) return;
+      redirecting = true;
+      openStoreButton.disabled = true;
+      window.location.href = "./store.html";
+    });
+
+    // İlk oturum kontrolü tamamlanmadan ekran yönlendirmesi yapılmaz.
+    onAuthStateChanged(auth, async user => {
+      if (!authInitialized) {
+        authInitialized = true;
+        loadingMessage.classList.add("hidden");
+      }
+
+      // Kullanıcı giriş/kayıt işlemi sırasında ekranı değiştirme.
+      if (busy) return;
+
+      await refreshUserScreen(user);
+    }, error => {
+      console.error("Firebase oturum hatası:", error);
+      loadingMessage.classList.add("hidden");
+      showOnly("auth");
+      showMessage(message, friendlyError(error));
     });
   </script>
 </body>
