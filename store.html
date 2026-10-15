@@ -5,22 +5,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>T2A GAME STUDİO | Oyun Mağazası</title>
-  <meta name="description" content="T2A GAME STUDİO oyun mağazasında popüler PC oyunlarını, fiyatlarını ve resmî mağaza bağlantılarını keşfet.">
+  <meta name="description" content="T2A GAME STUDİO oyun mağazasında ücretsiz ve ücretli PC oyunlarını keşfet.">
   <meta name="robots" content="index,follow">
-
   <style>
     :root{--bg:#101216;--panel:#191d24;--text:#f1f5f9;--muted:#9aa6b7;--green:#72e6a2;--border:#2c3440}
     *{box-sizing:border-box}
     body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
     a{color:inherit;text-decoration:none}
     button,input,select{font:inherit}
+    button{cursor:pointer}
     .topbar{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 5%;background:#171a20;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:5}
     .logo{font-size:21px;font-weight:900;white-space:nowrap}
     .logo span{color:var(--green)}
     .nav{display:flex;gap:18px;color:#c6ced9;font-size:14px}
     .nav a:hover{color:var(--green)}
-    .user-area{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:13px}
-    .logout{border:1px solid #46515f;color:white;background:#252b35;padding:9px 13px;border-radius:7px;cursor:pointer}
+    .user-area{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px}
+    .logout,.account-btn{border:1px solid #46515f;color:white;background:#252b35;padding:9px 13px;border-radius:7px;cursor:pointer}
     .hero{margin:28px auto;width:90%;max-width:1400px;min-height:300px;border-radius:16px;display:flex;align-items:center;padding:clamp(24px,5vw,64px);background:linear-gradient(90deg,rgba(10,13,18,.98),rgba(10,13,18,.7),rgba(10,13,18,.2)),url("https://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg") center/cover;border:1px solid #303844}
     .hero-content{max-width:570px}
     .eyebrow{color:var(--green);text-transform:uppercase;font-size:12px;font-weight:bold;letter-spacing:2px}
@@ -49,12 +49,13 @@
     .card-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px}
     .price{font-weight:bold;font-size:14px}
     .price.free{color:var(--green)}
-    .game-link{background:#303946;color:white;border-radius:6px;padding:9px 11px;font-size:12px;font-weight:bold;white-space:nowrap}
+    .game-link{display:inline-block;border:0;background:#303946;color:white;border-radius:6px;padding:9px 11px;font-size:12px;font-weight:bold;white-space:nowrap;text-align:center}
     .game-link:hover{background:var(--green);color:#102017}
     .notice{background:#18271f;color:#b7f2ce;border:1px solid #2a5039;padding:14px 16px;border-radius:8px;margin:24px 0;font-size:13px;line-height:1.6}
     .empty{display:none;text-align:center;padding:45px 15px;color:var(--muted);background:var(--panel);border-radius:10px}
     footer{border-top:1px solid var(--border);padding:26px 5%;color:var(--muted);font-size:13px;text-align:center}
     .loading{text-align:center;padding:80px 20px;color:var(--muted)}
+    .guest-notice{display:none;background:#292313;border:1px solid #655026;color:#ffe3a1;padding:12px 16px;border-radius:8px;margin:18px 0;font-size:13px;line-height:1.5}
     [hidden]{display:none!important}
     @media(max-width:1050px){.game-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.nav{display:none}}
     @media(max-width:720px){.topbar{padding:13px 4%}.logo{font-size:17px}.user-area{gap:7px}#userName{max-width:115px;overflow:hidden;text-overflow:ellipsis}.hero,main{width:92%}.hero{min-height:280px}.game-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.cover{height:140px}.game-info{padding:11px}.game-info h3{font-size:15px}.card-bottom{align-items:flex-start;flex-direction:column}.game-link{width:100%;text-align:center}}
@@ -71,9 +72,11 @@
         <a href="#games">Mağaza</a>
         <a href="#free">Ücretsiz oyunlar</a>
         <a href="#paid">Ücretli oyunlar</a>
+        <a href="./community.html">Topluluk oyunları</a>
       </nav>
       <div class="user-area">
         <span id="userName">Oyuncu</span>
+        <button id="accountBtn" class="account-btn">Hesap</button>
         <button id="logoutBtn" class="logout">Çıkış yap</button>
       </div>
     </header>
@@ -88,7 +91,11 @@
     </section>
 
     <main id="games">
-      <div class="heading">
+      <div id="guestNotice" class="guest-notice">
+        Misafir modundasın. Mağazayı gezebilirsin; ücretli bir oyunun mağaza bağlantısına geçmek için kalıcı hesap oluşturman gerekir.
+      </div>
+
+      <div class="heading" id="free">
         <h2>Oyun mağazası</h2>
         <p>Kapak görselleri, fiyat bilgileri ve oyunların resmî mağaza bağlantıları.</p>
       </div>
@@ -119,10 +126,16 @@
       <div id="gameGrid" class="game-grid"></div>
       <div id="emptyMessage" class="empty">Aramana uygun oyun bulunamadı.</div>
 
-      <div class="notice">
+      <div class="notice" id="paid">
         <strong>Fiyat bilgisi:</strong> Aşağıdaki ücretler örnek katalog değerleridir ve otomatik güncellenmez.
         Fiyatlar ülkeye, sürüme ve indirime göre değişebilir. Satın almadan önce resmî mağazadaki fiyatı kontrol et.
-        T2A GAME STUDİO bağımsız bir oyun keşif sayfasıdır.
+        T2A GAME STUDİO bağımsız bir oyun keşif sayfasıdır; bu katalogdaki ücretli oyunlar T2A üzerinden satılmaz.
+      </div>
+
+      <div class="heading">
+        <h2>Topluluk oyunları</h2>
+        <p>Kendi oyununu eklemek veya topluluk tarafından yüklenen oyunları incelemek için:</p>
+        <a href="./community.html" class="primary-btn">Topluluk mağazasını aç</a>
       </div>
     </main>
 
@@ -131,7 +144,9 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut, reload } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+    import {
+      getAuth, onAuthStateChanged, signOut, reload
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAl1iMlEFRSFAoFP_nWL1lGjeVuoqY8F8g",
@@ -145,8 +160,6 @@
     const auth = getAuth(initializeApp(firebaseConfig));
     const $ = id => document.getElementById(id);
 
-    // Fiyat alanı TL cinsindendir. Resmî mağaza fiyatı değişebileceği için gerektiğinde buradan güncelle.
-    // Steam AppID'leri kapak görselleri için kullanılıyor.
     const games = [
       {name:"VALORANT",category:"shooter",type:"free",price:0,label:"ÜCRETSİZ",description:"5'e 5 taktiksel karakter tabanlı FPS.",image:"https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt6f8d6e2e3b1f8d1f/valorant-cover.jpg",url:"https://playvalorant.com/"},
       {name:"Counter-Strike 2",category:"shooter",type:"free",price:0,label:"ÜCRETSİZ",description:"Rekabetçi takım tabanlı nişancı oyunu.",image:"https://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg",url:"https://store.steampowered.com/app/730/CounterStrike_2/"},
@@ -165,6 +178,7 @@
     ];
 
     let activeCategory = "all";
+    let currentUser = null;
 
     function escapeHtml(value) {
       return String(value).replace(/[&<>"']/g, char => ({
@@ -190,7 +204,7 @@
       if (sort === "za") filtered.sort((a,b) => b.name.localeCompare(a.name,"tr"));
       if (sort === "price") filtered.sort((a,b) => a.price - b.price);
 
-      $("gameGrid").innerHTML = filtered.map(game => `
+      $("gameGrid").innerHTML = filtered.map((game,index) => `
         <article class="game-card">
           <div class="cover">
             <img src="${escapeHtml(game.image)}" alt="${escapeHtml(game.name)} oyun görseli"
@@ -204,15 +218,29 @@
               <span class="price ${game.type === "free" ? "free" : ""}">
                 ${game.type === "free" ? "Ücretsiz" : game.price.toLocaleString("tr-TR") + " TL*"}
               </span>
-              <a class="game-link" href="${escapeHtml(game.url)}" target="_blank" rel="noopener noreferrer">
+              <button class="game-link" data-game-index="${games.indexOf(game)}">
                 ${game.type === "free" ? "Oyunu edin ↗" : "Mağazaya git ↗"}
-              </a>
+              </button>
             </div>
           </div>
         </article>
       `).join("");
 
       $("emptyMessage").style.display = filtered.length ? "none" : "block";
+
+      document.querySelectorAll("[data-game-index]").forEach(button => {
+        button.addEventListener("click", () => {
+          const game = games[Number(button.dataset.gameIndex)];
+          if (!game) return;
+
+          if (game.type === "paid" && currentUser?.isAnonymous) {
+            location.href = "./index.html?mode=register&purchase=" + encodeURIComponent(game.name);
+            return;
+          }
+
+          window.open(game.url, "_blank", "noopener,noreferrer");
+        });
+      });
     }
 
     $("searchInput").addEventListener("input", renderGames);
@@ -228,10 +256,14 @@
       });
     });
 
+    $("accountBtn").addEventListener("click", () => {
+      location.href = "./index.html";
+    });
+
     $("logoutBtn").addEventListener("click", async () => {
       try {
         await signOut(auth);
-        window.location.replace("./index.html");
+        location.replace("./index.html");
       } catch (error) {
         alert("Çıkış yapılamadı: " + error.message);
       }
@@ -239,20 +271,28 @@
 
     onAuthStateChanged(auth, async user => {
       if (!user) {
-        window.location.replace("./index.html");
+        location.replace("./index.html");
         return;
       }
 
       try {
-        await reload(user);
-
-        if (!user.emailVerified) {
-          window.location.replace("./index.html");
-          return;
+        if (!user.isAnonymous) {
+          await reload(user);
+          const providerLogin = user.providerData.some(p =>
+            p.providerId === "google.com" || p.providerId === "github.com"
+          );
+          if (!user.emailVerified && !providerLogin) {
+            location.replace("./index.html");
+            return;
+          }
         }
 
-        const nick = localStorage.getItem("t2a_nick_" + user.uid);
-        $("userName").textContent = nick || user.displayName || user.email || "Oyuncu";
+        currentUser = user;
+        const nick = user.isAnonymous ? "Misafir" :
+          (localStorage.getItem("t2a_nick_" + user.uid) || user.displayName || user.email || "Oyuncu");
+        $("userName").textContent = nick;
+        $("guestNotice").style.display = user.isAnonymous ? "block" : "none";
+        $("logoutBtn").textContent = user.isAnonymous ? "Misafirden çık" : "Çıkış yap";
         $("loading").hidden = true;
         $("store").hidden = false;
         renderGames();
