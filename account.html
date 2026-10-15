@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>T2A GAME STUDIO | Hesap Ayarları</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b1018;color:#edf3ff;font-family:Arial,sans-serif;padding:25px}
+main{max-width:760px;margin:auto}h1 span{color:#56a0ff}.card{background:#131c2a;border:1px solid #34445b;border-radius:14px;padding:20px;margin:18px 0}
+label{display:block;font-size:14px;margin:12px 0 7px}input{width:100%;padding:12px;background:#0d1521;color:white;border:1px solid #394960;border-radius:8px}
+button{padding:11px 14px;margin-top:12px;border:0;border-radius:8px;background:#2878e7;color:white;cursor:pointer;font-weight:bold}button.secondary{background:#34445a}button.danger{background:#8d3038}
+.full{width:100%}.msg{font-size:14px;line-height:1.6;overflow-wrap:anywhere;color:#ff9ba3}.ok{color:#7ce4ac}.muted{color:#a9b7ca;line-height:1.6}.hidden{display:none!important}.key{word-break:break-all;background:#0d1521;padding:12px;border-radius:8px}.qr{max-width:230px;background:white;padding:8px;display:block;margin:15px 0}
+</style>
+</head>
+<body>
+<main>
+<h1>T2A GAME <span>STUDIO</span></h1>
+<p class="muted">Hesap ayarları ve güvenlik.</p>
+<button class="secondary" onclick="location.href='./store.html'">← Mağazaya dön</button>
+<p id="loading" class="muted">Hesap kontrol ediliyor...</p>
+<div id="content" class="hidden">
+<section class="card">
+<h2>Profil</h2><p id="identity" class="muted"></p>
+<label for="nick">Oyuncu adı (3–20 karakter)</label><input id="nick" minlength="3" maxlength="20">
+<button id="saveNick">Nick'i kaydet</button>
+<p id="nickMsg" class="msg"></p>
+</section>
+<section class="card">
+<h2>E-posta adresini değiştir</h2>
+<p class="muted">Firebase, yeni adresi doğrulamanı isteyebilir. Google/GitHub hesabının ana e-posta adresi ilgili sağlayıcıdan yönetilir.</p>
+<label for="newEmail">Yeni e-posta</label><input id="newEmail" type="email" autocomplete="email">
+<label for="emailPassword">Mevcut şifren (e-posta/şifre hesabı)</label><input id="emailPassword" type="password" autocomplete="current-password">
+<button id="changeEmail">E-posta değişikliğini başlat</button>
+<p id="emailMsg" class="msg"></p>
+</section>
+<section class="card">
+<h2>Şifre değiştir</h2>
+<p class="muted">E-posta/şifre hesabı gerektirir. Google/GitHub hesabının şifresini ilgili sağlayıcıdan değiştir.</p>
+<label for="currentPassword">Mevcut şifre</label><input id="currentPassword" type="password" autocomplete="current-password">
+<label for="newPassword">Yeni şifre (en az 6 karakter)</label><input id="newPassword" type="password" minlength="6" autocomplete="new-password">
+<button id="changePassword">Şifreyi değiştir</button>
+<p id="passwordMsg" class="msg"></p>
+</section>
+<section class="card">
+<h2>Giriş yöntemleri</h2><p id="providers" class="muted"></p>
+<button id="linkGoogle">Google hesabını bağla</button>
+<button id="linkGithub" class="secondary">GitHub hesabını bağla</button>
+<p class="muted">Mevcut hesabına yeni bir sağlayıcı bağlamak için önce hesabınla giriş yapmış olmalısın. Başka bir Firebase hesabına bağlı sağlayıcı bağlanamaz.</p>
+<p id="providerMsg" class="msg"></p>
+</section>
+<section class="card">
+<h2>İki aşamalı doğrulama (Authenticator / TOTP)</h2>
+<p class="muted">Ön koşul: Firebase projesinde Identity Platform MFA/TOTP desteği etkin olmalı ve hesabın e-posta adresi doğrulanmış olmalı. QR kodunu Google Authenticator, Microsoft Authenticator veya Authy ile tara.</p>
+<p id="mfaStatus" class="muted">Durum kontrol ediliyor...</p>
+<button id="startMfa">Authenticator kurulumunu başlat</button>
+<div id="mfaSetup" class="hidden">
+<p>QR kod görünmezse aşağıdaki anahtarı uygulamaya elle gir.</p>
+<img id="qr" class="qr" alt="Authenticator QR kodu">
+<p class="muted">Kurulum anahtarı</p><div id="secret" class="key"></div>
+<label for="totpCode">Uygulamadaki 6 haneli kod</label><input id="totpCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
+<button id="confirmMfa">İki aşamalı doğrulamayı etkinleştir</button>
+</div>
+<p id="mfaMsg" class="msg"></p>
+</section>
+<section class="card">
+<h2>Oturum</h2><button id="logout" class="danger full">Çıkış yap</button>
+</section>
+</div>
+</main>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import{getAuth,onAuthStateChanged,signOut,updateProfile,verifyBeforeUpdateEmail,updatePassword,EmailAuthProvider,reauthenticateWithCredential,GoogleAuthProvider,GithubAuthProvider,linkWithPopup,linkWithRedirect,getMultiFactorResolver,multiFactor,TotpMultiFactorGenerator}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+const app=initializeApp({
+ apiKey:"AIzaSyAl1iMlEFRSFAoFP_nWL1lGjeVuoqY8F8g",
+ authDomain:"t2a-game-studio.firebaseapp.com",
+ projectId:"t2a-game-studio",
+ storageBucket:"t2a-game-studio.firebasestorage.app",
+ messagingSenderId:"284781981543",
+ appId:"1:284781981543:web:994dc99cef0142a97489c2"
+});
+const auth=getAuth(app),$=id=>document.getElementById(id);let user=null,totpSecret=null;
+function say(id,text,ok=false){$(id).textContent=text;$(id).className="msg"+(ok?" ok":"")}
+function err(e){const map={
+"auth/requires-recent-login":"Güvenlik için çıkış yapıp yeniden giriş yap, sonra tekrar dene.",
+"auth/email-already-in-use":"Bu e-posta başka bir hesapta kullanılıyor.",
+"auth/invalid-email":"E-posta adresi geçersiz.",
+"auth/weak-password":"Yeni şifre en az 6 karakter olmalı.",
+"auth/wrong-password":"Mevcut şifre yanlış.",
+"auth/provider-already-linked":"Bu giriş yöntemi zaten bağlı.",
+"auth/credential-already-in-use":"Bu Google/GitHub hesabı başka bir hesaba bağlı.",
+"auth/operation-not-allowed":"Firebase Console'da bu özelliği etkinleştir.",
+"auth/unauthorized-domain":"GitHub Pages alan adını Firebase Authorized domains bölümüne ekle."
+};return map[e.code]||"Hata: "+(e.code||"bilinmeyen")+" — "+(e.message||"");}
+function providerList(){return user.providerData.map(p=>p.providerId).join(", ")||"Bilinmiyor"}
+function updateMfaStatus(){const factors=multiFactor(user).enrolledFactors;$("mfaStatus").textContent=factors.length?"Etkin faktör: "+factors.map(f=>f.displayName||"Authenticator").join(", "):"Şu anda kayıtlı ikinci faktör yok."}
+onAuthStateChanged(auth,u=>{
+ user=u;
+ if(!u||u.isAnonymous){location.replace("./index.html");return}
+ $("loading").classList.add("hidden");$("content").classList.remove("hidden");
+ $("identity").textContent=(u.email||"E-posta yok")+" • UID: "+u.uid;
+ $("nick").value=localStorage.getItem("t2a_nick_"+u.uid)||u.displayName||"";
+ $("providers").textContent="Bağlı sağlayıcılar: "+providerList();
+ updateMfaStatus();
+});
+$("saveNick").onclick=async()=>{
+ const nick=$("nick").value.trim();if(nick.length<3||nick.length>20){say("nickMsg","Nick 3–20 karakter arasında olmalı.");return}
+ try{localStorage.setItem("t2a_nick_"+user.uid,nick);await updateProfile(user,{displayName:nick});say("nickMsg","Nick kaydedildi.",true);$("identity").textContent=(user.email||"E-posta yok")+" • UID: "+user.uid}catch(e){say("nickMsg",err(e))}
+};
+async function reauth(password){
+ const emailProvider=user.providerData.some(p=>p.providerId==="password");
+ if(emailProvider){
+  if(!password)throw new Error("Mevcut şifreni gir.");
+  await reauthenticateWithCredential(user,EmailAuthProvider.credential(user.email,password));
+ }
+}
+$("changeEmail").onclick=async()=>{
+ try{
+  const newEmail=$("newEmail").value.trim();if(!newEmail)throw new Error("Yeni e-posta adresini gir.");
+  await reauth($("emailPassword").value);
+  await verifyBeforeUpdateEmail(user,newEmail);
+  say("emailMsg","Yeni e-posta adresine doğrulama bağlantısı gönderildi. Bağlantıyı açarak işlemi tamamla.",true);
+ }catch(e){say("emailMsg",err(e))}
+};
+$("changePassword").onclick=async()=>{
+ try{
+  const old=$("currentPassword").value,next=$("newPassword").value;
+  if(next.length<6)throw new Error("Yeni şifre en az 6 karakter olmalı.");
+  if(!user.providerData.some(p=>p.providerId==="password"))throw new Error("Bu hesapta e-posta/şifre girişi bağlı değil. Şifreyi Google/GitHub sağlayıcında değiştir.");
+  await reauthenticateWithCredential(user,EmailAuthProvider.credential(user.email,old));
+  await updatePassword(user,next);$("currentPassword").value="";$("newPassword").value="";
+  say("passwordMsg","Şifre başarıyla değiştirildi.",true);
+ }catch(e){say("passwordMsg",err(e))}
+};
+$("linkGoogle").onclick=async()=>{
+ try{await linkWithPopup(user,new GoogleAuthProvider());say("providerMsg","Google hesabı bağlandı.",true);$("providers").textContent="Bağlı sağlayıcılar: "+providerList()}
+ catch(e){say("providerMsg",err(e))}
+};
+$("linkGithub").onclick=async()=>{
+ try{await linkWithRedirect(user,new GithubAuthProvider())}
+ catch(e){say("providerMsg",err(e))}
+};
+$("startMfa").onclick=async()=>{
+ try{
+  if(!user.emailVerified)throw new Error("Önce e-posta adresini doğrula.");
+  const session=await multiFactor(user).getSession();
+  totpSecret=await TotpMultiFactorGenerator.generateSecret(session);
+  $("secret").textContent=totpSecret.secretKey;
+  const uri=totpSecret.generateQrCodeUrl(user.email||user.uid,"T2A GAME STUDIO");
+  $("qr").src="https://quickchart.io/qr?size=220&text="+encodeURIComponent(uri);
+  $("mfaSetup").classList.remove("hidden");
+  say("mfaMsg","QR kodunu Authenticator uygulamasıyla tara, ardından 6 haneli kodu gir.",true);
+ }catch(e){say("mfaMsg",err(e)+" TOTP desteği Firebase projesinde etkin olmalı.")}
+};
+$("confirmMfa").onclick=async()=>{
+ try{
+  if(!totpSecret)throw new Error("Önce kurulum başlat.");
+  const code=$("totpCode").value.trim();if(!/^\d{6}$/.test(code))throw new Error("6 haneli kod gir.");
+  const assertion=TotpMultiFactorGenerator.assertionForEnrollment(totpSecret,code);
+  await multiFactor(user).enroll(assertion,"T2A Authenticator");
+  totpSecret=null;$("mfaSetup").classList.add("hidden");updateMfaStatus();
+  say("mfaMsg","İki aşamalı doğrulama etkinleştirildi.",true);
+ }catch(e){say("mfaMsg",err(e))}
+};
+$("logout").onclick=async()=>{await signOut(auth);location.replace("./index.html")};
+</script>
+</body>
+</html>
