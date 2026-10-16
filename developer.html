@@ -3,143 +3,95 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>T2A GAME STUDİO | Geliştirici Merkezi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T2A GAME STUDIO | Oyun Ekle</title>
 <style>
-:root{color-scheme:dark;--bg:#101216;--panel:#191d24;--text:#f1f5f9;--muted:#9aa6b7;--green:#72e6a2;--border:#2c3440;--red:#ff8585}
+:root{color-scheme:dark;--bg:#090c12;--panel:#121925;--line:#263347;--green:#8cff57;--muted:#9ba9bc}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
-a{color:inherit;text-decoration:none}
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-header{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:18px 5%;background:#171a20;border-bottom:1px solid var(--border)}
-.logo{font-weight:900;font-size:20px}.logo span{color:var(--green)}
-nav{display:flex;gap:16px;flex-wrap:wrap;color:#c6ced9;font-size:14px}
-nav a:hover{color:var(--green)}
-main{width:92%;max-width:1100px;margin:32px auto 70px}
-h1{font-size:clamp(28px,4vw,40px);margin:0 0 10px}
-h2{font-size:22px;margin-top:0}
-p{line-height:1.6}
-.muted{color:var(--muted);font-size:14px}
-.panel{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px;margin:22px 0}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-label{display:block;font-size:14px;margin:14px 0 7px;color:#dce4ef}
-input,textarea,select{width:100%;background:#10151c;border:1px solid #3a4553;border-radius:8px;padding:12px;color:white}
-textarea{min-height:95px;resize:vertical}
-input[type=file]{padding:10px}
-input[type=checkbox]{width:auto}
-button,.btn{border:0;border-radius:8px;padding:11px 15px;font-weight:700;background:var(--green);color:#102017;display:inline-block}
-button.secondary,.btn.secondary{background:#303946;color:white}
-button.danger{background:#572a31;color:#ffd9dd}
-button:disabled{opacity:.55;cursor:wait}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
-.notice{padding:13px;border:1px solid #385b45;background:#17281e;border-radius:8px;color:#c7f7d7;font-size:14px;line-height:1.6}
-.message{margin-top:13px;font-size:14px;line-height:1.6;overflow-wrap:anywhere}
-.error{color:var(--red)}.success{color:var(--green)}
-.earnings{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}
-.earning{padding:15px;border-radius:10px;background:#10151c;border:1px solid var(--border)}
-.earning small{display:block;color:var(--muted);margin-bottom:8px}
-.earning strong{font-size:21px}
-.game-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
-.game{overflow:hidden;border:1px solid var(--border);border-radius:12px;background:#12161d}
-.game img{width:100%;height:170px;object-fit:cover;display:block;background:#252b35}
-.game-body{padding:15px}
-.game-body h3{margin:0 0 8px}
-.game-body p{font-size:13px;color:var(--muted);min-height:35px}
-.game-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.game-actions button{font-size:12px;padding:9px 10px}
-.badge{display:inline-block;padding:5px 8px;background:#23392c;color:var(--green);border-radius:5px;font-size:11px}
-.empty{padding:25px;border:1px dashed #46515f;border-radius:10px;color:var(--muted);text-align:center}
+body{margin:0;background:var(--bg);color:#f4f7fb;font-family:Arial,sans-serif}
+header{background:#0b1019;border-bottom:1px solid var(--line);padding:17px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-size:21px;font-weight:900;color:var(--green);text-decoration:none}
+nav{display:flex;gap:10px;flex-wrap:wrap}
+nav a,.btn{padding:10px 13px;border-radius:8px;background:#1b2635;color:white;text-decoration:none;border:1px solid var(--line);cursor:pointer}
+main{width:min(760px,92%);margin:35px auto 60px}
+.panel{padding:25px;background:var(--panel);border:1px solid var(--line);border-radius:15px;margin-bottom:22px}
+h1{margin-top:0}p{line-height:1.6;color:var(--muted)}
+label{display:block;margin:15px 0 7px;font-weight:bold}
+input,textarea,select{width:100%;padding:12px;border-radius:8px;background:#0c131d;border:1px solid var(--line);color:white;font:inherit}
+textarea{min-height:100px;resize:vertical}
+button{font:inherit}
+button:disabled{opacity:.5;cursor:wait}
+.submit{width:100%;margin-top:20px;padding:13px;background:var(--green);color:#10170c;border:0;border-radius:9px;font-weight:bold;cursor:pointer}
+.message{padding:12px;border-radius:8px;background:#0c131d;border:1px solid var(--line);white-space:pre-wrap;overflow-wrap:anywhere}
 .hidden{display:none!important}
-footer{text-align:center;padding:25px;color:var(--muted);border-top:1px solid var(--border);font-size:13px}
-@media(max-width:700px){.row,.game-list{grid-template-columns:1fr}.earnings{grid-template-columns:1fr}.panel{padding:16px}header{padding:15px 4%}}
+.gameitem{padding:15px;margin-top:12px;border:1px solid var(--line);border-radius:10px}
+.gameitem h3{margin:0 0 8px}
+.gameitem a{color:var(--green);overflow-wrap:anywhere}
+.delete{background:#47252b;border:1px solid #75404a;color:white;border-radius:7px;padding:8px 11px;cursor:pointer;margin-top:10px}
+small{color:var(--muted)}
 </style>
 </head>
 <body>
 <header>
-  <a class="logo" href="./store.html">T2A <span>GAME STUDİO</span></a>
-  <nav>
-    <a href="./store.html">Mağaza</a>
-    <a href="./developer.html">Geliştirici Merkezi</a>
-    <a href="./index.html">Hesap</a>
-  </nav>
-  <span id="userLabel" class="muted">Oturum kontrol ediliyor...</span>
+<a class="logo" href="./store.html">T2A GAME STUDIO</a>
+<nav>
+<a href="./store.html">Mağaza</a>
+<a href="./index.html">Giriş / Hesap</a>
+</nav>
 </header>
 
-<main id="app" class="hidden">
-  <h1>Geliştirici Merkezi</h1>
-  <p class="muted">Oyunlarını yükle, bilgilerini yönet ve satış fiyatının %10 komisyon hesabını gör.</p>
+<main>
+<section class="panel">
+<h1>🎮 Oyununun bağlantısını ekle</h1>
+<p>Oyununun adını ve oynanabildiği bağlantıyı paylaş. Kayıt ücretsizdir. Yalnızca paylaşma hakkına sahip olduğun oyunları ekle.</p>
+<div id="authMessage" class="message">Hesap kontrol ediliyor...</div>
+<div id="formArea" class="hidden">
+<form id="gameForm">
+<label for="name">Oyun adı *</label>
+<input id="name" maxlength="80" required placeholder="Örn. Benim Oyunum">
 
-  <div class="notice">
-    <strong>Geliştirici hesabı ücretsizdir.</strong> Buradaki kazanç tutarları yalnızca hesaplamadır.
-    Gerçek ödeme, satış veya para transferi bu sürümde yapılmaz.
-  </div>
+<label for="description">Açıklama *</label>
+<textarea id="description" maxlength="1000" required placeholder="Oyunun ne hakkında?"></textarea>
 
-  <section class="panel">
-    <h2 id="formTitle">Yeni oyun yükle</h2>
-    <form id="gameForm">
-      <label for="gameName">Oyun adı *</label>
-      <input id="gameName" maxlength="80" required placeholder="Örn. T2A Arena">
+<label for="category">Kategori *</label>
+<select id="category" required>
+<option value="Diğer">Diğer</option>
+<option value="Aksiyon">Aksiyon</option>
+<option value="FPS">FPS</option>
+<option value="Hayatta Kalma">Hayatta Kalma</option>
+<option value="Sandbox">Sandbox</option>
+<option value="Korku">Korku</option>
+<option value="Bağımsız">Bağımsız</option>
+</select>
 
-      <label for="description">Oyun açıklaması *</label>
-      <textarea id="description" maxlength="1500" required placeholder="Oyunun ne hakkında olduğunu anlat..."></textarea>
+<label for="gameUrl">Oyun bağlantısı (HTTPS) *</label>
+<input id="gameUrl" type="url" required placeholder="https://ornek.com/oyunum">
 
-      <div class="row">
-        <div>
-          <label for="gameType">Oyun türü *</label>
-          <select id="gameType" required>
-            <option value="zip">ZIP — İndirilebilir oyun</option>
-            <option value="web">HTML — Tarayıcıda oynanan oyun</option>
-          </select>
-        </div>
-        <div>
-          <label for="price">Fiyat (TL) *</label>
-          <input id="price" type="number" min="0" max="1000000" step="0.01" value="0" required>
-        </div>
-      </div>
+<label for="coverUrl">Kapak görseli bağlantısı (HTTPS)</label>
+<input id="coverUrl" type="url" placeholder="https://ornek.com/kapak.jpg">
 
-      <div class="earnings">
-        <div class="earning"><small>Oyun fiyatı</small><strong id="gross">0,00 TL</strong></div>
-        <div class="earning"><small>T2A komisyonu (%10)</small><strong id="fee">0,00 TL</strong></div>
-        <div class="earning"><small>Geliştiriciye kalan (%90)</small><strong id="net">0,00 TL</strong></div>
-      </div>
+<small>Görsel bağlantısı isteğe bağlıdır. Bir görsel yüklemiyoruz; bağlantısını kaydediyoruz.</small>
+<button class="submit" id="submitBtn" type="submit">Oyunu yayımla</button>
+</form>
+</div>
+</section>
 
-      <label for="cover">Kapak görseli *</label>
-      <input id="cover" type="file" accept="image/png,image/jpeg,image/webp" required>
-      <p class="muted">PNG, JPG veya WebP. En fazla 5 MB.</p>
-
-      <label id="gameFileLabel" for="gameFile">Oyun ZIP dosyası *</label>
-      <input id="gameFile" type="file" accept=".zip,application/zip,application/x-zip-compressed" required>
-      <p id="fileHelp" class="muted">ZIP dosyası en fazla 190 MB olabilir.</p>
-
-      <div class="actions">
-        <button id="saveButton" type="submit">Oyunu yükle</button>
-        <button id="cancelEdit" type="button" class="secondary hidden">Düzenlemeyi iptal et</button>
-      </div>
-      <div id="formMessage" class="message" role="status" aria-live="polite"></div>
-    </form>
-  </section>
-
-  <section class="panel">
-    <h2>Yüklediğim oyunlar</h2>
-    <p class="muted">Burada yalnızca kendi oyunların listelenir. Fiyat ve görsel değişiklikleri mağazaya yansır.</p>
-    <div id="myGames" class="game-list"><div class="empty">Oyunların yükleniyor...</div></div>
-    <div id="listMessage" class="message" role="status" aria-live="polite"></div>
-  </section>
+<section class="panel">
+<h2>📚 Eklediğim oyunlar</h2>
+<div id="myGamesMessage" class="message">Oyunlar yükleniyor...</div>
+<div id="myGames"></div>
+</section>
 </main>
-
-<div id="loading" class="muted" style="text-align:center;padding:80px 20px">Firebase bağlantısı kontrol ediliyor...</div>
-<footer>© 2026 T2A GAME STUDİO</footer>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, reload } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 import {
-  getFirestore, collection, addDoc, getDocs, query, where, doc, updateDoc, deleteDoc, serverTimestamp
+  getAuth, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import {
+  getFirestore, collection, addDoc, query, where, getDocs,
+  deleteDoc, doc, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-import {
-  getStorage, ref, uploadBytes, getDownloadURL, deleteObject
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAl1iMlEFRSFAoFP_nWL1lGjeVuoqY8F8g",
@@ -153,298 +105,164 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const storage = getStorage(app);
-const $ = id => document.getElementById(id);
-const money = n => Number(n || 0).toLocaleString("tr-TR",{style:"currency",currency:"TRY"});
-let user = null;
-let editingId = null;
-let editingGame = null;
-let myGames = [];
 
-function say(id, text, type="") {
-  $(id).textContent = text;
-  $(id).className = "message " + type;
+const authMessage = document.getElementById("authMessage");
+const formArea = document.getElementById("formArea");
+const form = document.getElementById("gameForm");
+const submitBtn = document.getElementById("submitBtn");
+const myGames = document.getElementById("myGames");
+const myGamesMessage = document.getElementById("myGamesMessage");
+
+let currentUser = null;
+
+function validHttps(value, optional = false) {
+  if (!value && optional) return true;
+  try {
+    return new URL(value).protocol === "https:";
+  } catch {
+    return false;
+  }
 }
-function escapeHtml(value) {
-  return String(value ?? "").replace(/[&<>"']/g, c => ({
+
+function escapeText(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  })[c]);
-}
-function updateEarnings() {
-  const price = Math.max(0, Number($("price").value) || 0);
-  $("gross").textContent = money(price);
-  $("fee").textContent = money(price * .10);
-  $("net").textContent = money(price * .90);
-}
-$("price").addEventListener("input", updateEarnings);
-
-function updateFileMode() {
-  const web = $("gameType").value === "web";
-  $("gameFileLabel").textContent = web ? "Tek dosyalı HTML oyunu *" : "Oyun ZIP dosyası *";
-  $("fileHelp").textContent = web
-    ? "Tek dosyalı HTML oyunları kabul edilir. En fazla 5 MB. Harici dosyalara bağlı oyunlar bu sürümde desteklenmez."
-    : "ZIP dosyası en fazla 190 MB olabilir.";
-  $("gameFile").accept = web ? ".html,.htm,text/html" : ".zip,application/zip,application/x-zip-compressed";
-  $("gameFile").required = !editingId;
-}
-$("gameType").addEventListener("change", updateFileMode);
-
-function resetForm() {
-  editingId = null;
-  editingGame = null;
-  $("gameForm").reset();
-  $("price").value = "0";
-  $("formTitle").textContent = "Yeni oyun yükle";
-  $("saveButton").textContent = "Oyunu yükle";
-  $("cancelEdit").classList.add("hidden");
-  $("cover").required = true;
-  $("gameFile").required = true;
-  updateFileMode();
-  updateEarnings();
-  say("formMessage", "");
-}
-$("cancelEdit").addEventListener("click", resetForm);
-
-function validFile(file, kind) {
-  if (!file) return false;
-  if (kind === "cover") {
-    return ["image/jpeg","image/png","image/webp"].includes(file.type) && file.size <= 5 * 1024 * 1024;
-  }
-  if (kind === "zip") {
-    return /\.zip$/i.test(file.name) && file.size <= 190 * 1024 * 1024;
-  }
-  return /\.(html|htm)$/i.test(file.name) && file.size <= 5 * 1024 * 1024;
+  })[char]);
 }
 
-async function uploadFile(file, path, contentType) {
-  const fileRef = ref(storage, path);
-  await uploadBytes(fileRef, file, {contentType});
-  return {url: await getDownloadURL(fileRef), path};
+function canPublish(user) {
+  if (!user || user.isAnonymous) return false;
+  const providerIds = (user.providerData || []).map(item => item.providerId);
+  return user.emailVerified || providerIds.includes("google.com") || providerIds.includes("github.com");
 }
 
-$("gameForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  if (!user || user.isAnonymous) {
-    say("formMessage","Oyun yüklemek için kalıcı hesabınla giriş yapmalısın.","error");
+onAuthStateChanged(auth, async user => {
+  currentUser = user;
+
+  if (!user) {
+    authMessage.textContent = "Oyun eklemek için önce hesabına giriş yapmalısın.";
+    formArea.classList.add("hidden");
+    myGamesMessage.innerHTML = 'Hesabına giriş yap: <a href="./index.html">Giriş sayfası</a>';
     return;
   }
 
-  const name = $("gameName").value.trim();
-  const description = $("description").value.trim();
-  const type = $("gameType").value;
-  const price = Number($("price").value);
-  const coverFile = $("cover").files[0];
-  const gameFile = $("gameFile").files[0];
-
-  if (name.length < 2 || !description) {
-    say("formMessage","Oyun adı ve açıklaması gerekli.","error"); return;
-  }
-  if (!Number.isFinite(price) || price < 0 || price > 1000000) {
-    say("formMessage","Fiyat 0 ile 1.000.000 TL arasında olmalı.","error"); return;
-  }
-  if (coverFile && !validFile(coverFile,"cover")) {
-    say("formMessage","Kapak görseli PNG, JPG veya WebP olmalı ve 5 MB'ı aşmamalı.","error"); return;
-  }
-  if (gameFile && !validFile(gameFile,type === "zip" ? "zip" : "web")) {
-    say("formMessage",type === "zip" ? "ZIP dosyası seç ve 190 MB sınırını aşma." : "Tek bir HTML dosyası seç ve 5 MB sınırını aşma.","error"); return;
-  }
-  if (!editingId && (!coverFile || !gameFile)) {
-    say("formMessage","Yeni oyun için hem kapak görseli hem oyun dosyası gerekli.","error"); return;
+  if (!canPublish(user)) {
+    authMessage.innerHTML = 'Oyun yayımlamak için e-posta adresini doğrulamalısın. <a href="./index.html">Hesabına git</a>.';
+    formArea.classList.add("hidden");
+    myGamesMessage.textContent = "Doğrulanmış bir hesapla giriş yapmalısın.";
+    return;
   }
 
-  const button = $("saveButton");
-  button.disabled = true;
-  say("formMessage","Dosyalar yükleniyor. Dosya boyutuna göre biraz sürebilir.","success");
+  authMessage.textContent = "Giriş yapıldı. Oyununun bağlantısını paylaşabilirsin.";
+  formArea.classList.remove("hidden");
+  await loadMyGames();
+});
 
-  const id = editingId || crypto.randomUUID();
-  let uploadedPaths = [];
+form.addEventListener("submit", async event => {
+  event.preventDefault();
+
+  if (!canPublish(currentUser)) {
+    authMessage.textContent = "Lütfen doğrulanmış hesabınla tekrar giriş yap.";
+    return;
+  }
+
+  const name = document.getElementById("name").value.trim();
+  const description = document.getElementById("description").value.trim();
+  const category = document.getElementById("category").value;
+  const gameUrl = document.getElementById("gameUrl").value.trim();
+  const coverUrl = document.getElementById("coverUrl").value.trim();
+
+  if (name.length < 2 || name.length > 80) {
+    alert("Oyun adı 2-80 karakter arasında olmalı.");
+    return;
+  }
+  if (!description || description.length > 1000) {
+    alert("Açıklama boş olamaz ve 1000 karakteri geçemez.");
+    return;
+  }
+  if (!validHttps(gameUrl) || !validHttps(coverUrl, true)) {
+    alert("Oyun ve kapak bağlantıları HTTPS ile başlamalı. Kapak bağlantısı isteğe bağlıdır.");
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Kaydediliyor...";
+  authMessage.textContent = "Oyun bağlantısı kaydediliyor...";
 
   try {
-    let coverUrl = editingGame?.coverUrl || "";
-    let coverPath = editingGame?.coverPath || "";
-    let gameUrl = editingGame?.gameUrl || "";
-    let gamePath = editingGame?.gamePath || "";
-    let fileName = editingGame?.fileName || "";
-    let contentType = editingGame?.contentType || "";
-
-    if (coverFile) {
-      const uploaded = await uploadFile(coverFile,`games/${user.uid}/${id}/cover-${Date.now()}-${coverFile.name}`,coverFile.type);
-      coverUrl = uploaded.url; coverPath = uploaded.path; uploadedPaths.push(uploaded.path);
-    }
-    if (gameFile) {
-      const mime = type === "zip" ? "application/zip" : "text/html";
-      const uploaded = await uploadFile(gameFile,`games/${user.uid}/${id}/game-${Date.now()}-${gameFile.name}`,mime);
-      gameUrl = uploaded.url; gamePath = uploaded.path; uploadedPaths.push(uploaded.path);
-      fileName = gameFile.name; contentType = mime;
-    }
-
-    const data = {
-      ownerUid:user.uid,
-      ownerEmail:user.email || "",
+    await addDoc(collection(db, "communityGames"), {
+      ownerUid: currentUser.uid,
+      ownerEmail: currentUser.email || "",
       name,
       description,
-      type,
-      price:Math.round(price * 100) / 100,
-      commissionRate:0.10,
-      developerAmount:Math.round(price * 90) / 100,
-      coverUrl, coverPath, gameUrl, gamePath, fileName, contentType,
-      published:true,
-      updatedAt:serverTimestamp()
-    };
+      category,
+      gameUrl,
+      coverUrl,
+      published: true,
+      createdAt: serverTimestamp()
+    });
 
-    if (editingId) {
-      await updateDoc(doc(db,"communityGames",editingId),data);
-      // Eski dosyaları yeni dosya başarıyla kaydedildikten sonra temizlemeyi dene.
-      for (const oldPath of [
-        coverFile ? editingGame?.coverPath : null,
-        gameFile ? editingGame?.gamePath : null
-      ].filter(Boolean)) {
-        try { await deleteObject(ref(storage,oldPath)); } catch {}
-      }
-      say("formMessage","Oyun bilgileri güncellendi.","success");
-    } else {
-      await addDoc(collection(db,"communityGames"),{...data,createdAt:serverTimestamp()});
-      say("formMessage","Oyun başarıyla yüklendi ve mağazada yayımlandı.","success");
-    }
-
-    resetForm();
+    form.reset();
+    authMessage.textContent = "Oyun başarıyla yayımlandı!";
     await loadMyGames();
-    window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});
   } catch (error) {
-    console.error(error);
-    for (const path of uploadedPaths) {
-      try { await deleteObject(ref(storage,path)); } catch {}
-    }
-    say("formMessage","İşlem başarısız: " + (error.code || error.message || "Bilinmeyen hata") +
-      ". Firebase Firestore ve Storage kurallarını kontrol et.","error");
+    console.error("Oyun kaydedilemedi:", error);
+    authMessage.textContent = "Kayıt başarısız: " + (error.code || error.message);
   } finally {
-    button.disabled = false;
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Oyunu yayımla";
   }
 });
-
-function beginEdit(game) {
-  editingId = game.id;
-  editingGame = game;
-  $("gameName").value = game.name || "";
-  $("description").value = game.description || "";
-  $("gameType").value = game.type || "zip";
-  $("price").value = String(game.price ?? 0);
-  $("cover").value = "";
-  $("gameFile").value = "";
-  $("cover").required = false;
-  $("gameFile").required = false;
-  $("formTitle").textContent = "Oyunu düzenle";
-  $("saveButton").textContent = "Değişiklikleri kaydet";
-  $("cancelEdit").classList.remove("hidden");
-  updateFileMode();
-  updateEarnings();
-  say("formMessage","Değiştirmek istemediğin dosyaları boş bırakabilirsin.","success");
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-async function removeGame(game) {
-  if (!confirm(`"${game.name}" oyununu silmek istediğine emin misin?`)) return;
-  try {
-    await deleteDoc(doc(db,"communityGames",game.id));
-    for (const path of [game.coverPath,game.gamePath].filter(Boolean)) {
-      try { await deleteObject(ref(storage,path)); } catch (error) { console.warn(error); }
-    }
-    say("listMessage","Oyun silindi.","success");
-    await loadMyGames();
-  } catch (error) {
-    say("listMessage","Silinemedi: " + (error.code || error.message),"error");
-  }
-}
-
-function renderMyGames() {
-  const target = $("myGames");
-  if (!myGames.length) {
-    target.innerHTML = '<div class="empty">Henüz oyun yüklemedin. Yukarıdaki formdan ilk oyununu yükleyebilirsin.</div>';
-    return;
-  }
-  target.innerHTML = myGames.map(game => `
-    <article class="game">
-      <img src="${escapeHtml(game.coverUrl)}" alt="${escapeHtml(game.name)} kapak görseli">
-      <div class="game-body">
-        <span class="badge">${game.type === "zip" ? "ZIP İNDİRME" : "HTML TARAYICI OYUNU"}</span>
-        <h3>${escapeHtml(game.name)}</h3>
-        <p>${escapeHtml(game.description)}</p>
-        <strong>${money(game.price)}</strong>
-        <p class="muted">Komisyon: ${money(game.price * .10)} · Hesaplanan kalan: ${money(game.price * .90)}</p>
-        <div class="game-actions">
-          <button type="button" data-edit="${escapeHtml(game.id)}">Düzenle</button>
-          <button type="button" class="secondary" data-change-price="${escapeHtml(game.id)}">Fiyat değiştir</button>
-          <button type="button" class="secondary" data-change-cover="${escapeHtml(game.id)}">Görsel değiştir</button>
-          <button type="button" class="danger" data-delete="${escapeHtml(game.id)}">Sil</button>
-          <a class="btn secondary" href="${escapeHtml(game.gameUrl)}" target="_blank" rel="noopener noreferrer">Dosyayı aç</a>
-        </div>
-      </div>
-    </article>
-  `).join("");
-
-  target.querySelectorAll("[data-edit]").forEach(b => b.addEventListener("click",() => {
-    const game = myGames.find(g => g.id === b.dataset.edit); if (game) beginEdit(game);
-  }));
-  target.querySelectorAll("[data-change-price]").forEach(b => b.addEventListener("click",() => {
-    const game = myGames.find(g => g.id === b.dataset.changePrice); if (!game) return;
-    beginEdit(game); $("price").focus(); $("price").select();
-  }));
-  target.querySelectorAll("[data-change-cover]").forEach(b => b.addEventListener("click",() => {
-    const game = myGames.find(g => g.id === b.dataset.changeCover); if (!game) return;
-    beginEdit(game); $("cover").focus();
-  }));
-  target.querySelectorAll("[data-delete]").forEach(b => b.addEventListener("click",() => {
-    const game = myGames.find(g => g.id === b.dataset.delete); if (game) removeGame(game);
-  }));
-}
 
 async function loadMyGames() {
-  $("myGames").innerHTML = '<div class="empty">Oyunların yükleniyor...</div>';
-  try {
-    const q = query(collection(db,"communityGames"),where("ownerUid","==",user.uid));
-    const snapshot = await getDocs(q);
-    myGames = snapshot.docs.map(d => ({id:d.id,...d.data()}))
-      .sort((a,b) => (b.updatedAt?.seconds || 0) - (a.updatedAt?.seconds || 0));
-    renderMyGames();
-  } catch (error) {
-    console.error(error);
-    $("myGames").innerHTML = '<div class="empty">Oyunlar yüklenemedi. Firestore Rules bölümünü kontrol et.</div>';
-    say("listMessage","Hata: " + (error.code || error.message),"error");
-  }
-}
+  if (!currentUser) return;
 
-onAuthStateChanged(auth, async currentUser => {
-  if (!currentUser) {
-    location.replace("./index.html");
-    return;
-  }
-  if (currentUser.isAnonymous) {
-    alert("Geliştirici paneli için kalıcı hesapla giriş yapmalısın.");
-    location.replace("./index.html");
-    return;
-  }
+  myGamesMessage.textContent = "Oyunların yükleniyor...";
+  myGames.replaceChildren();
+
   try {
-    await reload(currentUser);
-    const providerLogin = currentUser.providerData.some(p => p.providerId === "google.com" || p.providerId === "github.com");
-    if (!currentUser.emailVerified && !providerLogin) {
-      alert("Geliştirici paneli için e-posta adresini doğrulamalısın.");
-      location.replace("./index.html");
+    const q = query(
+      collection(db, "communityGames"),
+      where("ownerUid", "==", currentUser.uid)
+    );
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+      myGamesMessage.textContent = "Henüz oyun eklemedin.";
       return;
     }
-    user = currentUser;
-    $("userLabel").textContent = user.displayName || user.email || "Geliştirici";
-    $("loading").classList.add("hidden");
-    $("app").classList.remove("hidden");
-    await loadMyGames();
-  } catch (error) {
-    console.error(error);
-    $("loading").textContent = "Hesap kontrol edilemedi: " + (error.code || error.message);
-  }
-});
 
-updateEarnings();
-updateFileMode();
+    myGamesMessage.textContent = "Eklediğin oyunlar: " + snapshot.size;
+
+    snapshot.forEach(item => {
+      const game = item.data();
+      const el = document.createElement("div");
+      el.className = "gameitem";
+      el.innerHTML = `
+        <h3>${escapeText(game.name)}</h3>
+        <p>${escapeText(game.category || "Diğer")}</p>
+        <p>${escapeText(game.description || "")}</p>
+        <a href="${escapeText(game.gameUrl)}" target="_blank" rel="noopener noreferrer">Oyun bağlantısını aç ↗</a>
+        <br><button class="delete" type="button">Oyunu kaldır</button>
+      `;
+
+      el.querySelector(".delete").addEventListener("click", async () => {
+        if (!confirm('"' + game.name + '" oyununu kaldırmak istiyor musun?')) return;
+        try {
+          await deleteDoc(doc(db, "communityGames", item.id));
+          await loadMyGames();
+        } catch (error) {
+          alert("Oyun silinemedi: " + (error.code || error.message));
+        }
+      });
+
+      myGames.append(el);
+    });
+  } catch (error) {
+    console.error("Oyun listesi yüklenemedi:", error);
+    myGamesMessage.textContent = "Liste yüklenemedi: " + (error.code || error.message);
+  }
+}
 </script>
 </body>
 </html>
-
